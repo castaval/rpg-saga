@@ -1,7 +1,4 @@
-﻿using System;
-using Gaming;
-
-namespace Base
+﻿namespace Base
 {
     public class Program
     {

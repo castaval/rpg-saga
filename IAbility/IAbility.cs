@@ -1,4 +1,6 @@
 public interface IAbility
 {   
-    void Spell(IPlayer myself, IPlayer enemy);
+    // int Round { get; set; }
+
+    void Spell(IPlayer myself, IPlayer enemy, int round);
 }

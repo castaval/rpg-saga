@@ -1,7 +1,13 @@
 public class VengeanceStrike : IAbility
 {
-    public void Spell(IPlayer myself, IPlayer enemy)
+    // public int Round { get; set; }
+
+    public void Spell(IPlayer myself, IPlayer enemy, int round)
     {
-        myself.Strength = myself.Strength * 130 / 100;
+        myself.MyEffect = new Buff(1.3, round);
+        myself.MyEffect.State(myself);
+        enemy.Health -= myself.Strength;
+        myself.MyEffect = myself.NormalState;
+        if (myself.MyEffect is Normal normal) normal.RestoreStrength(myself);
     }
 }

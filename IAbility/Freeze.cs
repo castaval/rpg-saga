@@ -1,7 +1,10 @@
 public class Freeze : IAbility
 {
-    public void Spell(IPlayer myself, IPlayer enemy)
+    // public int Round { get; set; }
+
+    public void Spell(IPlayer myself, IPlayer enemy, int round)
     {
-        enemy.MyEffect = new Stun();
+        enemy.MyEffect = new Stun(round);
+        enemy.Effect(enemy);
     }
 }

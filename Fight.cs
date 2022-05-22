@@ -2,6 +2,7 @@ public class Fight
 {   
     private IPlayer FirstPlayer { get; set; }
     private IPlayer SecondPlayer { get; set; }
+    private int round = 1;
     List <IPlayer> AllPlayers { get; set; }
 
     public Fight(IPlayer firstPlayer, IPlayer secondPlayer, ref List<IPlayer> allPlayers)
@@ -12,60 +13,62 @@ public class Fight
     }
 
     public void Battle()
-    {
-        Random rand = new Random();
+    {   
+        bool stopGame;
         while (true)
         {
-            FirstPlayer.MyEffect.State(FirstPlayer);
+            stopGame = PlayerTurn(FirstPlayer, SecondPlayer);
 
-            if (IsDefeat(FirstPlayer))
+            if (stopGame)
             {
                 break;
             }
 
-            if (rand.Next(0, 2) > 0)
-            {
-                FirstPlayer.AttackEnemy(SecondPlayer);
-            }
-            else
-            {
-                FirstPlayer.Ultimate(FirstPlayer, SecondPlayer);
-            }
+            stopGame = PlayerTurn(SecondPlayer, FirstPlayer);
 
-            if (IsDefeat(SecondPlayer))
+            if (stopGame)
             {
                 break;
             }
 
-            SecondPlayer.MyEffect.State(SecondPlayer);
-
-            if (IsDefeat(SecondPlayer))
-            {
-                break;
-            }
-
-            if (rand.Next(0, 2) > 0)
-            {
-                SecondPlayer.AttackEnemy(FirstPlayer);
-            }
-            else
-            {
-                SecondPlayer.Ultimate(SecondPlayer, FirstPlayer);
-            }
-
-            if (IsDefeat(FirstPlayer))
-            {
-                break;
-            }
-
+            round++;
         }
     }
 
-    private bool IsDefeat(IPlayer player)
+    private bool PlayerTurn(IPlayer playerGame, IPlayer playerWait)
     {
-        if (player.Health <= 0)
+        Random rand = new Random();
+        bool stopGame = false;
+
+        playerGame.DeleteEffect(playerGame, round);
+        playerGame.Effect(playerGame);
+
+        if (IsDefeat(playerGame, playerWait))
         {
-            AllPlayers.Remove(player);
+            stopGame = true;
+            return stopGame;
+        }
+        
+        if (!(playerGame.MyEffect is Stun))
+        {   
+            playerGame.Action(playerGame, playerWait, round);
+        }
+        
+        if (IsDefeat(playerWait, playerGame))
+        {
+            stopGame = true;
+            return stopGame;
+        }
+
+        return stopGame;
+    }
+
+    private bool IsDefeat(IPlayer loser, IPlayer winner)
+    {
+        if (loser.Health <= 0)
+        {
+            AllPlayers.Remove(loser);
+            winner.RestoreAfterBattle();
             return true;
         }
         

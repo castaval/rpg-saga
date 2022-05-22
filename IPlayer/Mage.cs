@@ -5,7 +5,7 @@ public class Mage : IPlayer
     public int Health { get; set; }
     public int FullHealth { get; set; }
     public IAbility Ability { get; set; }
-    public IEffect MyEffect { get; set; }
+    public IEffect MyEffect { get; set; } = null;
     public IEffect NormalState { get; set; }
 
     public Mage(string name, int strength, int health)
@@ -18,7 +18,20 @@ public class Mage : IPlayer
 
         Ability = new Freeze();
         NormalState = new Normal(Strength, Health);
-        MyEffect = NormalState;
+    }
+
+    public void Action(IPlayer myself, IPlayer enemy, int round)
+    {
+        Random rand = new Random();
+
+        if (rand.Next(0, 2) > 0)
+        {
+            AttackEnemy(enemy);
+        }
+        else
+        {
+            Ultimate(myself, enemy, round);
+        }
     }
     
     public void TakingDamage(int damage)
@@ -31,14 +44,34 @@ public class Mage : IPlayer
         enemy.TakingDamage(Strength);
     }
 
-    public void Ultimate(IPlayer myself, IPlayer enemy)
+    public void Ultimate(IPlayer myself, IPlayer enemy, int round)
     {
-        Ability.Spell(myself, enemy);
+        Ability.Spell(myself, enemy, round);
     }
 
     public void Effect(IPlayer myself)
     {
-        MyEffect.State(myself);
+        if (MyEffect != null)
+        {
+            MyEffect.State(myself);
+        }
     }
 
+    public void DeleteEffect(IPlayer myself, int round)
+    {
+        if (MyEffect != null)
+        {
+            MyEffect.DeleteState(myself, round);
+        }
+    }
+
+   public void RestoreAfterBattle()
+    {
+        MyEffect = NormalState;
+        if (NormalState is Normal normal)
+        {
+            Health = normal.Health;
+            Strength = normal.Strength;
+        } 
+    }
 }

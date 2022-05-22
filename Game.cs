@@ -1,8 +1,6 @@
 public class Game
 {
-    private int playerCounts { get; set; }
     private string[] playerNames = {"Nikita", "Stanislav", "Oleg", "Danila", "Alexey", "Michael", "Max", "Ivan", "Nazar", "Kevin", "Vladislav"};
-
 
     public void Run()
     {   
@@ -16,10 +14,10 @@ public class Game
             Draw(players);
             Tour(players);
             
-            // if (fight.IsWin())
-            // {
-            //     break;
-            // }
+            if (EndGame(players))
+            {
+                break;
+            }
         }
     }
 
@@ -46,4 +44,18 @@ public class Game
             } 
         }
     }
+
+    public bool EndGame(List <IPlayer> players)
+    {
+        if (players.Count == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
 }

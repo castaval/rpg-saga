@@ -1,14 +1,22 @@
 public class Buff : IEffect
 {   
-    public int Factor { get; set; }
+    public double Factor { get; set; }
 
-    public Buff(int factor)
+    public int LastUsedRound { get; set; }
+
+    public Buff(double factor, int round)
     {
         Factor = factor;
+        LastUsedRound = round;
     }
 
     public void State(IPlayer Player)
     {
-        Player.Strength = Player.Strength * Factor;
+        Player.Strength = (int)((double)Player.Strength * Factor);
     }
+
+    public void DeleteState(IPlayer Player, int Round)
+    {
+        Player.MyEffect = null;
+    }  
 }

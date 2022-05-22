@@ -5,7 +5,8 @@ public class Mage : IPlayer
     public int Health { get; set; }
     public int FullHealth { get; set; }
     public IAbility Ability { get; set; }
-    public Effect State { get; set; }
+    public IEffect MyEffect { get; set; }
+    public IEffect NormalState { get; set; }
 
     public Mage(string name, int strength, int health)
     {
@@ -16,7 +17,8 @@ public class Mage : IPlayer
         FullHealth = Health;
 
         Ability = new Freeze();
-        State = Effect.Normal;
+        NormalState = new Normal(Strength, Health);
+        MyEffect = NormalState;
     }
     
     public void TakingDamage(int damage)
@@ -32,6 +34,11 @@ public class Mage : IPlayer
     public void Ultimate(IPlayer myself, IPlayer enemy)
     {
         Ability.Spell(myself, enemy);
+    }
+
+    public void Effect(IPlayer myself)
+    {
+        MyEffect.State(myself);
     }
 
 }

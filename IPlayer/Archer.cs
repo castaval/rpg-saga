@@ -5,7 +5,7 @@ public class Archer : IPlayer
     public int Health { get; set; }
     public int FullHealth { get; set; }
     public IAbility Ability { get; set; }
-    public IEffect MyState { get; set; }
+    public IEffect MyEffect { get; set; }
     public IEffect NormalState { get; set; }
 
 
@@ -19,7 +19,7 @@ public class Archer : IPlayer
 
         Ability = new FireArrows();
         NormalState = new Normal(Strength, Health);
-        MyState = NormalState;
+        MyEffect = NormalState;
     }
     
     public void TakingDamage(int damage)
@@ -39,7 +39,7 @@ public class Archer : IPlayer
 
     public void Effect(IPlayer myself)
     {
-        MyState.State(myself);
+        MyEffect.State(myself);
     }
 
 }

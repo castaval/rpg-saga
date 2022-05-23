@@ -1,7 +1,9 @@
+namespace rpg_sage.Entities; // ВЕЗДЕ ЗАСУНЬ
+
 public class Knight : IPlayer
 {
     public string Name { get; set; }
-    public int Strength { get; set; } 
+    public int Strength { get; set; }
     public int Health { get; set; }
     public int FullHealth { get; set; }
     public IAbility Ability { get; set; }
@@ -74,5 +76,4 @@ public class Knight : IPlayer
             Strength = normal.Strength;
         } 
     }
-
 }

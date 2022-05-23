@@ -1,10 +1,17 @@
+// ПО МУЖСКИ ПЕРЕНЕСТИ ИМЕНА В JSON!!!
+
 public class Game
 {
+    private ILogger _logger;
+    public Game(ILogger logger) {
+        _logger = logger;
+    }
+
     private string[] playerNames = {"Nikita", "Stanislav", "Oleg", "Danila", "Alexey", "Michael", "Max", "Ivan", "Nazar", "Kevin", "Vladislav"};
 
     public void Run()
     {   
-        PlayersGenerator playersGenerator = new PlayersGenerator(10, playerNames);
+        PlayersGenerator playersGenerator = new PlayersGenerator(10, playerNames); // ЗАВЕСТИ НАСТРОЙКУ
     
         List<IPlayer> players = new List<IPlayer>(playersGenerator.GeneratePlayersArray());        
         
@@ -21,7 +28,7 @@ public class Game
         }
     }
 
-    public void Draw(List <IPlayer> players)
+    public void Draw(List <IPlayer> players) // RENAME IT"S PLEASE MY FRIENDE
     {
         Random random = new Random();
         for (int i = players.Count - 1; i >= 1; i--)
@@ -45,17 +52,5 @@ public class Game
         }
     }
 
-    public bool EndGame(List <IPlayer> players)
-    {
-        if (players.Count == 1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-
+    public bool EndGame(List <IPlayer> players) => (players.Count == 1) ? true : false; // ПО МУЖСКИ УНЧИТОЖИЛ АНАЛЬНУЮ ЧЕРВОТОЧИНУ
 }

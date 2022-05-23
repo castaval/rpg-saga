@@ -49,7 +49,7 @@ public class Fight
             return stopGame;
         }
         
-        if (!(playerGame.MyEffect is Stun))
+        if (playerGame.MyEffect is Stun piska) // DOWNCAST BABY 
         {   
             playerGame.Action(playerGame, playerWait, round);
         }

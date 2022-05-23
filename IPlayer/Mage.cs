@@ -1,20 +1,20 @@
 public class Mage : IPlayer
 {
     public string Name { get; set; }
-    public int Strength { get; set; } 
+    public int Strength { get; set; }
     public int Health { get; set; }
-    public int FullHealth { get; set; }
     public IAbility Ability { get; set; }
     public IEffect MyEffect { get; set; } = null;
     public IEffect NormalState { get; set; }
+    public string ClassName { get; set; }
 
-    public Mage(string name, int strength, int health)
+    public Mage(string name, int strength, int health, string className)
     {
         Name = name;
         Strength = strength;
         Health = health;
 
-        FullHealth = Health;
+        ClassName = className;
 
         Ability = new Freeze();
         NormalState = new Normal(Strength, Health);
@@ -33,7 +33,7 @@ public class Mage : IPlayer
             Ultimate(myself, enemy, round);
         }
     }
-    
+
     public void TakingDamage(int damage)
     {
         Health -= damage;
@@ -72,6 +72,6 @@ public class Mage : IPlayer
         {
             Health = normal.Health;
             Strength = normal.Strength;
-        } 
+        }
     }
 }

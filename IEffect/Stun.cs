@@ -1,5 +1,5 @@
 public class Stun : IEffect
-{   
+{
     public int LastUsedRound { get; set; }
 
     public Stun(int round)
@@ -16,7 +16,9 @@ public class Stun : IEffect
     {
         if (Round - LastUsedRound == 1)
         {
+            Player.MyEffect = Player.NormalState;
+            if (Player.MyEffect is Normal normal) normal.RestoreStrength(Player);
             Player.MyEffect = null;
         }
-    }    
+    }
 }

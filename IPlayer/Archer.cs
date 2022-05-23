@@ -1,21 +1,20 @@
 public class Archer : IPlayer
 {
     public string Name { get; set; }
-    public int Strength { get; set; } 
+    public int Strength { get; set; }
     public int Health { get; set; }
-    public int FullHealth { get; set; }
     public IAbility Ability { get; set; }
     public IEffect MyEffect { get; set; } = null;
     public IEffect NormalState { get; set; }
+    public string ClassName { get; set; }
 
-
-    public Archer(string name, int strength, int health)
+    public Archer(string name, int strength, int health, string className)
     {
         Name = name;
         Strength = strength;
         Health = health;
 
-        FullHealth = Health;
+        ClassName = className;
 
         Ability = new FireArrows();
         NormalState = new Normal(Strength, Health);
@@ -34,7 +33,7 @@ public class Archer : IPlayer
             Ultimate(myself, enemy, round);
         }
     }
-    
+
     public void TakingDamage(int damage)
     {
         Health -= damage;
@@ -73,7 +72,7 @@ public class Archer : IPlayer
         {
             Health = normal.Health;
             Strength = normal.Strength;
-        } 
+        }
         MyEffect = null;
     }
 }

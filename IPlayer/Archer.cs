@@ -3,7 +3,7 @@ public class Archer : IPlayer
     public string Name { get; set; }
     public int Strength { get; set; }
     public int Health { get; set; }
-    public IAbility Ability { get; set; }
+    public List <IAbility> Ability { get; set; } = new List<IAbility>();
     public IEffect MyEffect { get; set; } = null;
     public IEffect NormalState { get; set; }
     public string ClassName { get; set; }
@@ -16,7 +16,7 @@ public class Archer : IPlayer
 
         ClassName = className;
 
-        Ability = new FireArrows();
+        Ability.Add(new FireArrows());
         NormalState = new Normal(Strength, Health);
     }
 
@@ -44,9 +44,12 @@ public class Archer : IPlayer
         enemy.TakingDamage(Strength);
     }
 
-    public void Ultimate(IPlayer myself, IPlayer enemy, int round)
+    public int Ultimate(IPlayer myself, IPlayer enemy, int round)
     {
-        Ability.Spell(myself, enemy, round);
+        Random random = new Random();
+        int randomUlt = random.Next(0, Ability.Count);
+        Ability[randomUlt].Spell(myself, enemy, round);
+        return randomUlt;
     }
 
     public void Effect(IPlayer myself)

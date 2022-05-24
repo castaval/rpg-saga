@@ -21,49 +21,49 @@ public class GameLogger : ILogger
         Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} наносит урон {playerAttack.Strength} противнику ({playerDefend.ClassName}) {playerDefend.Name}");
     }
 
-    public void PrintUltimate(IPlayer playerAttack, IPlayer playerDefend)
+    public void PrintUltimate(IPlayer playerAttack, IPlayer playerDefend, int randomUlt)
     {
         if (playerAttack.ClassName == "Маг")
         {
-            Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Ability.AbilityName}) на противника ({playerDefend.ClassName}) {playerDefend.Name}");
+            Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Ability[randomUlt].AbilityName}) на противника ({playerDefend.ClassName}) {playerDefend.Name}");
         }
         else if (playerAttack.ClassName == "Рыцарь")
         {
-            Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Ability.AbilityName}) и наносит урон {playerAttack.Strength} противнику ({playerDefend.ClassName}) {playerDefend.Name}");
+            Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Ability[randomUlt].AbilityName}) и наносит урон {playerAttack.Strength} противнику ({playerDefend.ClassName}) {playerDefend.Name}");
         } else if (playerAttack.ClassName == "Лучник")
         {
-            Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Ability.AbilityName}) и поджигает противника ({playerDefend.ClassName}) {playerDefend.Name}");
+            Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Ability[randomUlt].AbilityName}) и поджигает противника ({playerDefend.ClassName}) {playerDefend.Name}");
         } else if (playerAttack.ClassName == "Огненный маг")
         {
-            if (playerAttack.Ability.AbilityName == "Заворожение")
+            if (playerAttack.Ability[randomUlt].AbilityName == "Заворожение")
             {
-                Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Ability.AbilityName}) на противника ({playerDefend.ClassName}) {playerDefend.Name}");
+                Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Ability[randomUlt].AbilityName}) на противника ({playerDefend.ClassName}) {playerDefend.Name}");
             }
             else
             {
-                Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Ability.AbilityName}) и наносит урон {playerAttack.Strength} противнику ({playerDefend.ClassName}) {playerDefend.Name}");
+                Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Ability[randomUlt].AbilityName}) и наносит урон {playerAttack.Strength} противнику ({playerDefend.ClassName}) {playerDefend.Name}");
             }
         }
         else if (playerAttack.ClassName == "Воин")
         {
-            if (playerAttack.Ability.AbilityName == "Удар возмездия")
+            if (playerAttack.Ability[randomUlt].AbilityName == "Удар возмездия")
             {
-                Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Ability.AbilityName}) и наносит урон {playerAttack.Strength} противнику ({playerDefend.ClassName}) {playerDefend.Name}");
+                Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Ability[randomUlt].AbilityName}) и наносит урон {playerAttack.Strength} противнику ({playerDefend.ClassName}) {playerDefend.Name}");
             }
             else
             {
-                Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Ability.AbilityName}) на противника ({playerDefend.ClassName}) {playerDefend.Name}");
+                Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Ability[randomUlt].AbilityName}) на противника ({playerDefend.ClassName}) {playerDefend.Name}");
             }
         }
         else if (playerAttack.ClassName == "Стрелок")
         {
-            if (playerAttack.Ability.AbilityName == "Огненные стрелы")
+            if (playerAttack.Ability[randomUlt].AbilityName == "Огненные стрелы")
             {
-                Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Ability.AbilityName}) и поджигает противника ({playerDefend.ClassName}) {playerDefend.Name}");
+                Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Ability[randomUlt].AbilityName}) и поджигает противника ({playerDefend.ClassName}) {playerDefend.Name}");
             }
             else
             {
-                Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Ability.AbilityName}) на противника ({playerDefend.ClassName}) {playerDefend.Name}");
+                Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Ability[randomUlt].AbilityName}) на противника ({playerDefend.ClassName}) {playerDefend.Name}");
             }
         }
     }

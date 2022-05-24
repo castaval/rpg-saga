@@ -61,8 +61,8 @@ public class Fight
             }
             else
             {
-                playerGame.Ultimate(playerGame, playerWait, round);
-                Logger.PrintUltimate(playerGame, playerWait);
+                int randomUlt = playerGame.Ultimate(playerGame, playerWait, round);
+                Logger.PrintUltimate(playerGame, playerWait, randomUlt);
             }
         }
 

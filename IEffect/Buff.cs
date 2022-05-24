@@ -19,9 +19,14 @@ public class Buff : IEffect
     {
         if (Round - LastUsedRound == 1)
         {
-            Player.MyEffect = Player.NormalState;
-            if (Player.MyEffect is Normal normal) normal.RestoreStrength(Player);
-            Player.MyEffect = null;
+            if (Player.NormalState is Normal normal) normal.RestoreStrength(Player);
+            foreach (var effect in Player.MyEffects.ToList())
+            {
+                if (effect is Buff buff)
+                {
+                    Player.MyEffects.Remove(buff);
+                }
+            }
         }
     }
 }

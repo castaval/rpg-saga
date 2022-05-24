@@ -30,6 +30,6 @@ public class Normal : IEffect
 
     public void DeleteState(IPlayer Player, int Round, int numberPlayer)
     {
-        Player.MyEffect = null;
+        Player.MyEffects = null;
     }
 }

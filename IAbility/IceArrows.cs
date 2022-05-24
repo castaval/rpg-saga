@@ -4,7 +4,7 @@ public class IceArrows : IAbility
     public string AbilityName { get; set; } = "Ледяные стрелы";
     public void Spell(IPlayer myself, IPlayer enemy, int round)
     {
-        enemy.MyEffect = new LongDamage(10, round);
+        enemy.MyEffects.Add(new LongDamage(10, round));
     }
 }
 

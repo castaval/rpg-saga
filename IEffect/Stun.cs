@@ -16,9 +16,14 @@ public class Stun : IEffect
     {
         if ((Round - LastUsedRound == 1 && numberPlayer == 2) || (Round - LastUsedRound == 2 && numberPlayer == 1))
         {
-            Player.MyEffect = Player.NormalState;
-            if (Player.MyEffect is Normal normal) normal.RestoreStrength(Player);
-            Player.MyEffect = null;
+            if (Player.NormalState is Normal normal) normal.RestoreStrength(Player);
+            foreach (var effect in Player.MyEffects.ToList())
+            {
+                if (effect is Stun stun)
+                {
+                    Player.MyEffects.Remove(stun);
+                }
+            }
         }
     }
 }

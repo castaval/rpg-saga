@@ -20,7 +20,15 @@ public class LongDamage : IEffect
     {
         if ((Round - LastUsedRound == 10 && numberPlayer == 2) || (Round - LastUsedRound == 11 && numberPlayer == 1))
         {
-            Player.MyEffect = null;
+            foreach (var effect in Player.MyEffects.ToList())
+            {
+                if (effect is LongDamage longDamage)
+                {
+                    Player.MyEffects.Remove(longDamage);
+                }
+            }
         }
+
+
     }
 }

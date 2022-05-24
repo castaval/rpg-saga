@@ -5,8 +5,10 @@ public class VengeanceStrike : IAbility
     public string AbilityName { get; set; } = "Удар возмездия";
     public void Spell(IPlayer myself, IPlayer enemy, int round)
     {
-        myself.MyEffect = new Buff(1.3, round);
-        myself.MyEffect.State(myself);
+        IEffect generateBuff = new Buff(1.3, round);;
+        myself.MyEffects.Add(generateBuff);
+        int indexEffect = myself.MyEffects.IndexOf(generateBuff);
+        myself.MyEffects[indexEffect].State(myself);
         enemy.Health -= myself.Strength;
     }
 }

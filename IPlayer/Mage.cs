@@ -3,8 +3,8 @@ public class Mage : IPlayer
     public string Name { get; set; }
     public int Strength { get; set; }
     public int Health { get; set; }
-    public List <IAbility> Ability { get; set; } = new List<IAbility>();
-    public IEffect MyEffect { get; set; } = null;
+    public List <IAbility> Abilities { get; set; } = new List<IAbility>();
+    public List <IEffect> MyEffects { get; set; } = new List<IEffect>();
     public IEffect NormalState { get; set; }
     public string ClassName { get; set; }
 
@@ -16,22 +16,8 @@ public class Mage : IPlayer
 
         ClassName = className;
 
-        Ability.Add(new Freeze());
+        Abilities.Add(new Freeze());
         NormalState = new Normal(Strength, Health);
-    }
-
-    public void Action(IPlayer myself, IPlayer enemy, int round)
-    {
-        Random rand = new Random();
-
-        if (rand.Next(0, 2) > 0)
-        {
-            AttackEnemy(enemy);
-        }
-        else
-        {
-            Ultimate(myself, enemy, round);
-        }
     }
 
     public void TakingDamage(int damage)
@@ -47,34 +33,40 @@ public class Mage : IPlayer
     public int Ultimate(IPlayer myself, IPlayer enemy, int round)
     {
         Random random = new Random();
-        int randomUlt = random.Next(0, Ability.Count);
-        Ability[randomUlt].Spell(myself, enemy, round);
+        int randomUlt = random.Next(0, Abilities.Count);
+        Abilities[randomUlt].Spell(myself, enemy, round);
         return randomUlt;
     }
 
     public void Effect(IPlayer myself)
     {
-        if (MyEffect != null)
+        if (MyEffects.Count != 0)
         {
-            MyEffect.State(myself);
+            foreach (var effect in MyEffects)
+            {
+                effect.State(myself);
+            }
         }
     }
 
     public void DeleteEffect(IPlayer myself, int round, int numberPlayer)
     {
-        if (MyEffect != null)
+        if (MyEffects.Count != 0)
         {
-            MyEffect.DeleteState(myself, round, numberPlayer);
+            foreach (var effect in MyEffects.ToList())
+            {
+                effect.DeleteState(myself, round, numberPlayer);
+            }
         }
     }
 
    public void RestoreAfterBattle()
     {
-        MyEffect = NormalState;
         if (NormalState is Normal normal)
         {
             Health = normal.Health;
             Strength = normal.Strength;
         }
+        MyEffects.Clear();
     }
 }

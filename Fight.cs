@@ -41,6 +41,7 @@ public class Fight
     {
         Random rand = new Random();
         bool stopGame = false;
+        bool isStun = false;
 
         playerGame.DeleteEffect(playerGame, round, numberPlayer);
         playerGame.Effect(playerGame);
@@ -52,7 +53,15 @@ public class Fight
             return stopGame;
         }
 
-        if (!(playerGame.MyEffect is Stun))
+        foreach (var effect in playerGame.MyEffects)
+        {
+            if (effect is Stun)
+            {
+                isStun = true;
+            }
+        }
+
+        if (!isStun)
         {
             if (rand.Next(0, 3) > 0)
             {

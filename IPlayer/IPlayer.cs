@@ -12,7 +12,7 @@ public interface IPlayer
     void AttackEnemy(IPlayer enemy);
     void Ultimate(IPlayer myself, IPlayer enemy, int round);
     void Effect(IPlayer myself);
-    void DeleteEffect(IPlayer myself, int round);
+    void DeleteEffect(IPlayer myself, int round, int numberPlayer);
     void RestoreAfterBattle();
 
 

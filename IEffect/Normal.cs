@@ -28,8 +28,8 @@ public class Normal : IEffect
         myself.Health = Health;
     }
 
-    public void DeleteState(IPlayer Player, int Round)
+    public void DeleteState(IPlayer Player, int Round, int numberPlayer)
     {
         Player.MyEffect = null;
-    }  
+    }
 }

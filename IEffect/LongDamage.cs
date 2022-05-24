@@ -1,5 +1,5 @@
 public class LongDamage : IEffect
-{   
+{
     public int Factor { get; set; }
 
     public int LastUsedRound { get; set; }
@@ -16,11 +16,11 @@ public class LongDamage : IEffect
         enemy.Health -= Factor;
     }
 
-    public void DeleteState(IPlayer Player, int Round)
+    public void DeleteState(IPlayer Player, int Round, int numberPlayer)
     {
-        if (Round - LastUsedRound > 10)
+        if ((Round - LastUsedRound == 10 && numberPlayer == 2) || (Round - LastUsedRound == 11 && numberPlayer == 1))
         {
             Player.MyEffect = null;
         }
-    }  
+    }
 }

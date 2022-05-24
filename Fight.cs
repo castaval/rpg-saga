@@ -19,14 +19,14 @@ public class Fight
         bool stopGame;
         while (true)
         {
-            stopGame = PlayerTurn(FirstPlayer, SecondPlayer);
+            stopGame = PlayerTurn(FirstPlayer, SecondPlayer, 1);
 
             if (stopGame)
             {
                 break;
             }
 
-            stopGame = PlayerTurn(SecondPlayer, FirstPlayer);
+            stopGame = PlayerTurn(SecondPlayer, FirstPlayer, 2);
 
             if (stopGame)
             {
@@ -37,12 +37,12 @@ public class Fight
         }
     }
 
-    private bool PlayerTurn(IPlayer playerGame, IPlayer playerWait)
+    private bool PlayerTurn(IPlayer playerGame, IPlayer playerWait, int numberPlayer)
     {
         Random rand = new Random();
         bool stopGame = false;
 
-        playerGame.DeleteEffect(playerGame, round);
+        playerGame.DeleteEffect(playerGame, round, numberPlayer);
         playerGame.Effect(playerGame);
         Logger.PrintEffect(playerGame);
 
@@ -58,7 +58,6 @@ public class Fight
             {
                 playerGame.AttackEnemy(playerWait);
                 Logger.PrintAttack(playerGame, playerWait);
-
             }
             else
             {

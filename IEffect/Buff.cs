@@ -1,5 +1,5 @@
 public class Buff : IEffect
-{   
+{
     public double Factor { get; set; }
 
     public int LastUsedRound { get; set; }
@@ -15,8 +15,13 @@ public class Buff : IEffect
         Player.Strength = (int)((double)Player.Strength * Factor);
     }
 
-    public void DeleteState(IPlayer Player, int Round)
+    public void DeleteState(IPlayer Player, int Round, int numberPlayer)
     {
-        Player.MyEffect = null;
-    }  
+        if (Round - LastUsedRound == 1)
+        {
+            Player.MyEffect = Player.NormalState;
+            if (Player.MyEffect is Normal normal) normal.RestoreStrength(Player);
+            Player.MyEffect = null;
+        }
+    }
 }

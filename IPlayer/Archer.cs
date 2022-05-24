@@ -57,11 +57,11 @@ public class Archer : IPlayer
         }
     }
 
-    public void DeleteEffect(IPlayer myself, int round)
+    public void DeleteEffect(IPlayer myself, int round, int numberPlayer)
     {
         if (MyEffect != null)
         {
-            MyEffect.DeleteState(myself, round);
+            MyEffect.DeleteState(myself, round, numberPlayer);
         }
     }
 

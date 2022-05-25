@@ -14,14 +14,14 @@ public class Stun : IEffect
 
     public void DeleteState(IPlayer Player, int Round, int numberPlayer)
     {
-        if ((Round - LastUsedRound == 1 && numberPlayer == 2) || (Round - LastUsedRound == 2 && numberPlayer == 1))
+        foreach (var effect in Player.MyEffects.ToList())
         {
-            if (Player.NormalState is Normal normal) normal.RestoreStrength(Player);
-            foreach (var effect in Player.MyEffects.ToList())
+            if (effect is Stun stun)
             {
-                if (effect is Stun stun)
+                if ((Round - effect.LastUsedRound == 1 && numberPlayer == 2) || (Round - effect.LastUsedRound == 2 && numberPlayer == 1))
                 {
                     Player.MyEffects.Remove(stun);
+                    if (Player.NormalState is Normal normal) normal.RestoreStrength(Player);
                 }
             }
         }

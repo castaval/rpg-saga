@@ -70,8 +70,17 @@ public class Fight
             }
             else
             {
-                int randomUlt = playerGame.Ultimate(playerGame, playerWait, round);
-                Logger.PrintUltimate(playerGame, playerWait, randomUlt);
+                playerGame.EnterCurrentAbility();
+                if (playerGame.CanUltimate())
+                {
+                    int randomUlt = playerGame.Ultimate(playerGame, playerWait, round);
+                    Logger.PrintUltimate(playerGame, playerWait, randomUlt);
+                }
+                else
+                {
+                    playerGame.AttackEnemy(playerWait);
+                    Logger.PrintAttack(playerGame, playerWait);
+                }
             }
         }
 

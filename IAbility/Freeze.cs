@@ -1,10 +1,16 @@
 public class Freeze : IAbility
 {
-    // public int Round { get; set; }
+    public int NumberUses { get; set; } = 0;
     public string AbilityName { get; set; } = "Заворожение";
     public void Spell(IPlayer myself, IPlayer enemy, int round)
     {
         enemy.MyEffects.Add(new Stun(round));
-        // enemy.Effect(enemy);
+        NumberUses++;
     }
+
+    public bool CanSpell()
+    {
+        return true;
+    }
+
 }

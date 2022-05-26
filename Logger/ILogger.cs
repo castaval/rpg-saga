@@ -1,7 +1,11 @@
 public interface ILogger
 {
     void PrintStart();
-    void PrintInfo();
+    void PrintStartSelectHero();
+    void PrintSelectHero();
+    void PrintWrongNumberHero();
+    void PrintAddAbility(int heroChoice);
+    void PrintNumberPlayers();
     void PrintTour(int numberTour);
     void PrintEnd(IPlayer winner);
     void PrintAttack(IPlayer playerAttack, IPlayer playerDefend);

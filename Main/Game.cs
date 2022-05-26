@@ -13,11 +13,15 @@ public class Game
 
     public void Run()
     {
-        PlayersGenerator playersGenerator = new PlayersGenerator(10, playerNames);
+        Logger.PrintStart();
+
+        Selector selector = new Selector(Logger);
+
+        List<bool> newClasses = selector.SelectCustomClass();
+
+        PlayersGenerator playersGenerator = new PlayersGenerator(10, playerNames, newClasses);
 
         List<IPlayer> players = new List<IPlayer>(playersGenerator.GeneratePlayersArray());
-
-        Logger.PrintStart();
 
         while (true)
         {

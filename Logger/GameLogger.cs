@@ -5,14 +5,48 @@ public class GameLogger : ILogger
         Console.WriteLine("\nПриветствуем в Akvelon RPG SAGA!");
     }
 
+    public void PrintStartSelectHero()
+    {
+        Console.WriteLine("Добавьте персонажей с новыми способностями!");
+    }
+
+    public void PrintSelectHero()
+    {
+        Console.WriteLine("\n1 - Огненный маг\n2 - Воин\n3 - Стрелок");
+    }
+
+    public void PrintWrongNumberHero()
+    {
+        Console.WriteLine("Неправильное число!");
+    }
+
+    public void PrintAddAbility(int heroChoice)
+    {
+        if (heroChoice == 1)
+        {
+            Console.WriteLine("Фаербол - наносит 2 * сила урона");
+            Console.WriteLine("Добавить? Да - Нет");
+        }
+        else if (heroChoice == 2)
+        {
+            Console.WriteLine("Оглушающий удар - противник пропускает ход");
+            Console.WriteLine("Добавить? Да - Нет");
+        }
+        else if (heroChoice == 3)
+        {
+            Console.WriteLine("Ледяные стрелы - противник получает 5 урона за ход (можно применить один раз)");
+            Console.WriteLine("Добавить? Да - Нет");
+        }
+    }
+
+    public void PrintNumberPlayers()
+    {
+        Console.WriteLine("\nПриступить к выбору количества игроков? Да - Нет");
+    }
+
     public void PrintTour(int numberTour)
     {
         Console.WriteLine($"Кон {numberTour}.\n");
-
-    }
-
-    public void PrintInfo()
-    {
 
     }
 

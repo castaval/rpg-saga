@@ -1,10 +1,12 @@
 public class PlayersGenerator {
     private int PlayersCount { get; set; }
     private string[] Names { get; set; }
+    private List<bool> NewClasses { get; set; }
 
-    public PlayersGenerator(int playerCount, string[] names) {
+    public PlayersGenerator(int playerCount, string[] names, List<bool> newClasses) {
         PlayersCount = playerCount;
         Names = names;
+        NewClasses = newClasses;
     }
 
     public List<IPlayer> GeneratePlayersArray() {

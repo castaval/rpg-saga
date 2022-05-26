@@ -15,7 +15,7 @@ public class GameLogger : ILogger
         Console.WriteLine("\n1 - Огненный маг\n2 - Воин\n3 - Стрелок");
     }
 
-    public void PrintWrongNumberHero()
+    public void PrintWrongNumber()
     {
         Console.WriteLine("Неправильное число!");
     }
@@ -39,9 +39,14 @@ public class GameLogger : ILogger
         }
     }
 
-    public void PrintNumberPlayers()
+    public void PrintStartNumberPlayers()
     {
         Console.WriteLine("\nПриступить к выбору количества игроков? Да - Нет");
+    }
+
+    public void PrintNumberPlayers()
+    {
+        Console.WriteLine("Выберите число игроков:");
     }
 
     public void PrintTour(int numberTour)

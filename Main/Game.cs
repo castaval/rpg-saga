@@ -19,7 +19,9 @@ public class Game
 
         List<bool> newClasses = selector.SelectCustomClass();
 
-        PlayersGenerator playersGenerator = new PlayersGenerator(10, playerNames, newClasses);
+        int playerNumbers = selector.SelectNumbPlayers();
+
+        PlayersGenerator playersGenerator = new PlayersGenerator(playerNumbers, playerNames, newClasses);
 
         List<IPlayer> players = new List<IPlayer>(playersGenerator.GeneratePlayersArray());
 

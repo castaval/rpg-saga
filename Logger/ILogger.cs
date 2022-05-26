@@ -3,8 +3,9 @@ public interface ILogger
     void PrintStart();
     void PrintStartSelectHero();
     void PrintSelectHero();
-    void PrintWrongNumberHero();
+    void PrintWrongNumber();
     void PrintAddAbility(int heroChoice);
+    void PrintStartNumberPlayers();
     void PrintNumberPlayers();
     void PrintTour(int numberTour);
     void PrintEnd(IPlayer winner);

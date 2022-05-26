@@ -14,7 +14,7 @@ public class PlayersGenerator {
         var rand = new Random();
         for (int i = 0; i < PlayersCount; i++) {
             IPlayer player;
-            var playerName = Names[rand.Next(PlayersCount)];
+            var playerName = Names[rand.Next(Names.Length)];
             var playerStrength = rand.Next(25, 51);
             var playerHealth = rand.Next(50, 101);
             var playerVariant = rand.Next(0, 3);

@@ -48,7 +48,7 @@ public class Selector
 
                 IsAddNewClass(confirm);
 
-                Logger.PrintNumberPlayers();
+                Logger.PrintStartNumberPlayers();
 
                 string? answer = Console.ReadLine();
                 if (!(String.IsNullOrEmpty(answer)))
@@ -61,10 +61,33 @@ public class Selector
             }
             else
             {
-                Logger.PrintWrongNumberHero();
+                Logger.PrintWrongNumber();
+            }
+        }
+        return NewClasses;
+    }
+
+    public int SelectNumbPlayers()
+    {
+        int playersNumbers;
+
+        while (true)
+        {
+            Logger.PrintNumberPlayers();
+
+            string? numberOfPlayers = Console.ReadLine();
+
+            if (int.TryParse(numberOfPlayers, out int i) && (i % 2 == 0))
+            {
+                playersNumbers = i;
+                break;
+            }
+            else
+            {
+                Logger.PrintWrongNumber();
             }
         }
 
-        return NewClasses;
+        return playersNumbers;
     }
 }

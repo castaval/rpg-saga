@@ -59,6 +59,11 @@ namespace Logger
 
         }
 
+        public void PrintVersus(IPlayer firstPlayer, IPlayer secondPlayer)
+        {
+            Console.WriteLine($"({firstPlayer.ClassName}) {firstPlayer.Name} vs ({secondPlayer.ClassName}) {secondPlayer.Name}");
+        }
+
         public void PrintAttack(IPlayer playerAttack, IPlayer playerDefend)
         {
             Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} наносит урон {playerAttack.Strength} противнику ({playerDefend.ClassName}) {playerDefend.Name}");

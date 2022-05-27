@@ -22,8 +22,12 @@ namespace Fight
         public void Battle()
         {
             bool stopGame;
+
+            Logger.PrintVersus(FirstPlayer, SecondPlayer);
+
             while (true)
             {
+
                 stopGame = PlayerTurn(FirstPlayer, SecondPlayer, 1);
 
                 if (stopGame)

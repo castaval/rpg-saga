@@ -1,23 +1,26 @@
 namespace Base
 {
+    using System.Text.Json;
     using Logger;
     using Selector;
     using PlayersGenerator;
     using Players;
     using Fight;
+    using Names;
     public class Game
     {
         private ILogger Logger { get; set; }
         private int numberTour { get; set; }
-
+        private List<Names>? playerNames { get; set; }
         public Game(ILogger GameLogger)
         {
             Logger = GameLogger;
             numberTour = 1;
+
+            const string filepath = @"/home/alexander/Develop/rpg-saga-refactoring/KEKW/rpg-saga/Main/Names.json";
+            var json = File.ReadAllText(filepath);
+            playerNames = JsonSerializer.Deserialize<List<Names>>(json);
         }
-
-        private string[] playerNames = {"Nikita", "Stanislav", "Oleg", "Danila", "Alexey", "Michael", "Max", "Ivan", "Nazar", "Kevin", "Vladislav"};
-
         public void Run()
         {
             Logger.PrintStart();

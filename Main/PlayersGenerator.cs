@@ -1,14 +1,15 @@
 namespace PlayersGenerator
 {
     using Players;
+    using Names;
     public class PlayersGenerator {
         private int PlayersCount { get; set; }
-        private string[] Names { get; set; }
+        private List<Names> PlayerNames { get; set; }
         private List<bool> NewClasses { get; set; }
 
-        public PlayersGenerator(int playerCount, string[] names, List<bool> newClasses) {
+        public PlayersGenerator(int playerCount, List<Names> names, List<bool> newClasses) {
             PlayersCount = playerCount;
-            Names = names;
+            PlayerNames = names;
             NewClasses = newClasses;
         }
 
@@ -17,7 +18,7 @@ namespace PlayersGenerator
             var rand = new Random();
             for (int i = 0; i < PlayersCount; i++) {
                 IPlayer player;
-                var playerName = Names[rand.Next(Names.Length)];
+                var playerName = PlayerNames[rand.Next(PlayerNames.Count)].PlayerName;
                 var playerStrength = rand.Next(25, 51);
                 var playerHealth = rand.Next(50, 101);
                 var playerVariant = rand.Next(0, 3);

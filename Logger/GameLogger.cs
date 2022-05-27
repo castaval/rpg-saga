@@ -34,7 +34,7 @@ public class GameLogger : ILogger
         }
         else if (heroChoice == 3)
         {
-            Console.WriteLine("Ледяные стрелы - противник получает 5 урона за ход (можно применить один раз)");
+            Console.WriteLine("Ледяные стрелы - противник получает 10 урона за ход (можно применить один раз)");
             Console.WriteLine("Добавить? Да - Нет");
         }
     }

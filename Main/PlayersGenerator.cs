@@ -20,13 +20,55 @@ public class PlayersGenerator {
             var playerVariant = rand.Next(0, 3);
             switch (playerVariant) {
                 case 0:
-                    player = new Knight(playerName, playerStrength, playerHealth, "Рыцарь");
+                    if (NewClasses[1] == true)
+                    {
+                        if (rand.Next(0, 2) > 0)
+                        {
+                            player = new Knight(playerName, playerStrength, playerHealth, "Рыцарь");
+                        }
+                        else
+                        {
+                            player = new Knight(playerName, playerStrength, playerHealth, "Воин");
+                        }
+                    }
+                    else
+                    {
+                        player = new Knight(playerName, playerStrength, playerHealth, "Рыцарь");
+                    }
                     break;
                 case 1:
-                    player = new Mage(playerName, playerStrength, playerHealth, "Маг");
+                    if (NewClasses[0] == true)
+                    {
+                        if (rand.Next(0, 2) > 0)
+                        {
+                            player = new Mage(playerName, playerStrength, playerHealth, "Маг");
+                        }
+                        else
+                        {
+                            player = new Mage(playerName, playerStrength, playerHealth, "Огненный маг");
+                        }
+                    }
+                    else
+                    {
+                        player = new Mage(playerName, playerStrength, playerHealth, "Маг");
+                    }
                     break;
                 case 2:
-                    player = new Archer(playerName, playerStrength, playerHealth, "Лучник");
+                    if (NewClasses[2] == true)
+                    {
+                        if (rand.Next(0, 2) > 0)
+                        {
+                            player = new Archer(playerName, playerStrength, playerHealth, "Лучник");
+                        }
+                        else
+                        {
+                            player = new Archer(playerName, playerStrength, playerHealth, "Стрелок");
+                        }
+                    }
+                    else
+                    {
+                        player = new Archer(playerName, playerStrength, playerHealth, "Лучник");
+                    }
                     break;
                 default:
                     throw new Exception();

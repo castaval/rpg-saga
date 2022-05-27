@@ -18,6 +18,10 @@ public class Archer : IPlayer
         ClassName = className;
 
         Abilities.Add(new FireArrows());
+        if (ClassName == "Стрелок")
+        {
+            Abilities.Add(new IceArrows());
+        }
         NormalState = new Normal(Strength, Health);
     }
 

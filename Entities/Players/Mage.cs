@@ -18,6 +18,10 @@ public class Mage : IPlayer
         ClassName = className;
 
         Abilities.Add(new Freeze());
+        if (ClassName == "Огненный маг")
+        {
+            Abilities.Add(new Fireball());
+        }
         NormalState = new Normal(Strength, Health);
     }
 

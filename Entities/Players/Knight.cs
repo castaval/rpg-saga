@@ -18,6 +18,10 @@ public class Knight : IPlayer
         ClassName = className;
 
         Abilities.Add(new VengeanceStrike());
+        if (ClassName == "Воин")
+        {
+            Abilities.Add(new StunStrike());
+        }
         NormalState = new Normal(Strength, Health);
     }
 

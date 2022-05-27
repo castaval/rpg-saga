@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/alexander/Develop/rpg-saga-refactoring/Папка/rpg-saga/rpg-saga.csproj",
+      "projectUniqueName": "/home/alexander/Develop/rpg-saga-refactoring/KEKW/rpg-saga/rpg-saga.csproj",
       "projectName": "rpg-saga",
-      "projectPath": "/home/alexander/Develop/rpg-saga-refactoring/Папка/rpg-saga/rpg-saga.csproj",
+      "projectPath": "/home/alexander/Develop/rpg-saga-refactoring/KEKW/rpg-saga/rpg-saga.csproj",
       "packagesPath": "/home/alexander/.nuget/packages/",
-      "outputPath": "/home/alexander/Develop/rpg-saga-refactoring/Папка/rpg-saga/obj/",
+      "outputPath": "/home/alexander/Develop/rpg-saga-refactoring/KEKW/rpg-saga/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/alexander/.nuget/NuGet/NuGet.Config"

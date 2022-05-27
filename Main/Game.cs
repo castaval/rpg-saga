@@ -1,81 +1,89 @@
-public class Game
+namespace Base
 {
-    private ILogger Logger { get; set; }
-    private int numberTour { get; set; }
-
-    public Game(ILogger GameLogger)
+    using Logger;
+    using Selector;
+    using PlayersGenerator;
+    using Players;
+    using Fight;
+    public class Game
     {
-        Logger = GameLogger;
-        numberTour = 1;
-    }
+        private ILogger Logger { get; set; }
+        private int numberTour { get; set; }
 
-    private string[] playerNames = {"Nikita", "Stanislav", "Oleg", "Danila", "Alexey", "Michael", "Max", "Ivan", "Nazar", "Kevin", "Vladislav"};
-
-    public void Run()
-    {
-        Logger.PrintStart();
-
-        Selector selector = new Selector(Logger);
-
-        List<bool> newClasses = selector.SelectCustomClass();
-
-        int playerNumbers = selector.SelectNumbPlayers();
-
-        PlayersGenerator playersGenerator = new PlayersGenerator(playerNumbers, playerNames, newClasses);
-
-        List<IPlayer> players = new List<IPlayer>(playersGenerator.GeneratePlayersArray());
-
-        while (true)
+        public Game(ILogger GameLogger)
         {
-            Logger.PrintTour(numberTour);
-            numberTour++;
+            Logger = GameLogger;
+            numberTour = 1;
+        }
 
-            Draw(players);
-            Tour(players);
+        private string[] playerNames = {"Nikita", "Stanislav", "Oleg", "Danila", "Alexey", "Michael", "Max", "Ivan", "Nazar", "Kevin", "Vladislav"};
 
-            if (EndGame(players))
+        public void Run()
+        {
+            Logger.PrintStart();
+
+            Selector selector = new Selector(Logger);
+
+            List<bool> newClasses = selector.SelectCustomClass();
+
+            int playerNumbers = selector.SelectNumbPlayers();
+
+            PlayersGenerator playersGenerator = new PlayersGenerator(playerNumbers, playerNames, newClasses);
+
+            List<IPlayer> players = new List<IPlayer>(playersGenerator.GeneratePlayersArray());
+
+            while (true)
             {
-                break;
+                Logger.PrintTour(numberTour);
+                numberTour++;
+
+                Draft(players);
+                Tour(players);
+
+                if (EndGame(players))
+                {
+                    break;
+                }
             }
         }
-    }
 
-    public void Draw(List <IPlayer> players)
-    {
-        Random random = new Random();
-        for (int i = players.Count - 1; i >= 1; i--)
+        public void Draft(List <IPlayer> players)
         {
-            int j = random.Next(i + 1);
-            var temp = players[j];
-            players[j] = players[i];
-            players[i] = temp;
-        }
-    }
-
-    public void Tour(List <IPlayer> players)
-    {
-        for (int i = 0; i < players.Count; i++)
-        {
-            if (i + 1 < players.Count)
+            Random random = new Random();
+            for (int i = players.Count - 1; i >= 1; i--)
             {
-                Fight fight = new Fight(players[i], players[i+1], ref players, Logger);
-                fight.Battle();
+                int j = random.Next(i + 1);
+                var temp = players[j];
+                players[j] = players[i];
+                players[i] = temp;
             }
         }
-    }
 
-    public bool EndGame(List <IPlayer> players)
-    {
-        if (players.Count == 1)
+        public void Tour(List <IPlayer> players)
         {
-            Logger.PrintEnd(players[0]);
-            return true;
+            for (int i = 0; i < players.Count; i++)
+            {
+                if (i + 1 < players.Count)
+                {
+                    Fight fight = new Fight(players[i], players[i+1], ref players, Logger);
+                    fight.Battle();
+                }
+            }
         }
-        else
+
+        public bool EndGame(List <IPlayer> players)
         {
-            return false;
+            if (players.Count == 1)
+            {
+                Logger.PrintEnd(players[0]);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
+
+
     }
-
-
 }

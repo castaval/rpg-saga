@@ -1,93 +1,96 @@
-public class Selector
+namespace Selector
 {
-    private int ChoiceNewHero { get; set; }
-    private ILogger Logger { get; set; }
-    private List<bool> NewClasses { get; set; } = new List<bool>();
-
-    public Selector(ILogger logger)
+    using Logger;
+    public class Selector
     {
-        Logger = logger;
-        NewClasses.Add(false);
-        NewClasses.Add(false);
-        NewClasses.Add(false);
-    }
+        private int ChoiceNewHero { get; set; }
+        private ILogger Logger { get; set; }
+        private List<bool> NewClasses { get; set; } = new List<bool>();
 
-    private void IsAddNewClass(string? confirm)
-    {
-        if (confirm != "Да")
+        public Selector(ILogger logger)
         {
-            Logger.PrintAddAbility(ChoiceNewHero);
-            confirm = Console.ReadLine();
-
-            if (confirm == "Да")
-            {
-                NewClasses[ChoiceNewHero-1] = true;
-                confirm = "Нет";
-            }
-            else
-            {
-                NewClasses[ChoiceNewHero-1] = false;
-            }
+            Logger = logger;
+            NewClasses.Add(false);
+            NewClasses.Add(false);
+            NewClasses.Add(false);
         }
-    }
 
-    public List<bool> SelectCustomClass()
-    {
-        Logger.PrintStartSelectHero();
-        string? confirm = "Нет";
-
-        while (true)
+        private void IsAddNewClass(string? confirm)
         {
-            Logger.PrintSelectHero();
-
-            string? HeroChoice = Console.ReadLine();
-
-            if (int.TryParse(HeroChoice, out int i) && i < 4)
+            if (confirm != "Да")
             {
-                ChoiceNewHero = i;
+                Logger.PrintAddAbility(ChoiceNewHero);
+                confirm = Console.ReadLine();
 
-                IsAddNewClass(confirm);
-
-                Logger.PrintStartNumberPlayers();
-
-                string? answer = Console.ReadLine();
-                if (!(String.IsNullOrEmpty(answer)))
+                if (confirm == "Да")
                 {
-                    if (answer == "Да")
-                    {
-                        break;
-                    }
+                    NewClasses[ChoiceNewHero-1] = true;
+                    confirm = "Нет";
+                }
+                else
+                {
+                    NewClasses[ChoiceNewHero-1] = false;
                 }
             }
-            else
-            {
-                Logger.PrintWrongNumber();
-            }
         }
-        return NewClasses;
-    }
 
-    public int SelectNumbPlayers()
-    {
-        int playersNumbers;
-
-        while (true)
+        public List<bool> SelectCustomClass()
         {
-            Logger.PrintNumberPlayers();
+            Logger.PrintStartSelectHero();
+            string? confirm = "Нет";
 
-            string? numberOfPlayers = Console.ReadLine();
+            while (true)
+            {
+                Logger.PrintSelectHero();
 
-            if (int.TryParse(numberOfPlayers, out int i) && (i % 2 == 0))
-            {
-                playersNumbers = i;
-                break;
+                string? HeroChoice = Console.ReadLine();
+
+                if (int.TryParse(HeroChoice, out int i) && i < 4)
+                {
+                    ChoiceNewHero = i;
+
+                    IsAddNewClass(confirm);
+
+                    Logger.PrintStartNumberPlayers();
+
+                    string? answer = Console.ReadLine();
+                    if (!(String.IsNullOrEmpty(answer)))
+                    {
+                        if (answer == "Да")
+                        {
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    Logger.PrintWrongNumber();
+                }
             }
-            else
-            {
-                Logger.PrintWrongNumber();
-            }
+            return NewClasses;
         }
 
-        return playersNumbers;
+        public int SelectNumbPlayers()
+        {
+            int playersNumbers;
+
+            while (true)
+            {
+                Logger.PrintNumberPlayers();
+
+                string? numberOfPlayers = Console.ReadLine();
+
+                if (int.TryParse(numberOfPlayers, out int i) && (i % 2 == 0))
+                {
+                    playersNumbers = i;
+                    break;
+                }
+                else
+                {
+                    Logger.PrintWrongNumber();
+                }
+            }
+            return playersNumbers;
+        }
     }
 }

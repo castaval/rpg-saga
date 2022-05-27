@@ -1,92 +1,98 @@
-public class Mage : IPlayer
+namespace Players
 {
-    public string Name { get; set; }
-    public int Strength { get; set; }
-    public int Health { get; set; }
-    public List <IAbility> Abilities { get; set; } = new List<IAbility>();
-    public int CurrentAbility { get; set; }
-    public List <IEffect> MyEffects { get; set; } = new List<IEffect>();
-    public IEffect NormalState { get; set; }
-    public string ClassName { get; set; }
-
-    public Mage(string name, int strength, int health, string className)
+    using Abilities;
+    using Effects;
+    public class Mage : IPlayer
     {
-        Name = name;
-        Strength = strength;
-        Health = health;
+        public string Name { get; set; }
+        public int Strength { get; set; }
+        public int Health { get; set; }
+        public List <IAbility> Abilities { get; set; } = new List<IAbility>();
+        public int CurrentAbility { get; set; }
+        public List <IEffect> MyEffects { get; set; } = new List<IEffect>();
+        public IEffect NormalState { get; set; }
+        public string ClassName { get; set; }
 
-        ClassName = className;
-
-        Abilities.Add(new Freeze());
-        if (ClassName == "Огненный маг")
+        public Mage(string name, int strength, int health, string className)
         {
-            Abilities.Add(new Fireball());
-        }
-        NormalState = new Normal(Strength, Health);
-    }
+            Name = name;
+            Strength = strength;
+            Health = health;
 
-    public void TakingDamage(int damage)
-    {
-        Health -= damage;
-    }
+            ClassName = className;
 
-    public void AttackEnemy(IPlayer enemy)
-    {
-        enemy.TakingDamage(Strength);
-    }
-
-    public void EnterCurrentAbility()
-    {
-        Random random = new Random();
-        CurrentAbility = random.Next(0, Abilities.Count);
-    }
-
-    public bool CanUltimate()
-    {
-        return Abilities[CurrentAbility].CanSpell();
-    }
-
-    public int Ultimate(IPlayer myself, IPlayer enemy, int round)
-    {
-        Abilities[CurrentAbility].Spell(myself, enemy, round);
-        return CurrentAbility;
-    }
-
-    public void Effect(IPlayer myself)
-    {
-        if (MyEffects.Count != 0)
-        {
-            foreach (var effect in MyEffects)
+            Abilities.Add(new Freeze());
+            if (ClassName == "Огненный маг")
             {
-                effect.State(myself);
+                Abilities.Add(new Fireball());
+            }
+            NormalState = new Normal(Strength, Health);
+        }
+
+        public void TakingDamage(int damage)
+        {
+            Health -= damage;
+        }
+
+        public void AttackEnemy(IPlayer enemy)
+        {
+            enemy.TakingDamage(Strength);
+        }
+
+        public void EnterCurrentAbility()
+        {
+            Random random = new Random();
+            CurrentAbility = random.Next(0, Abilities.Count);
+        }
+
+        public bool CanUltimate()
+        {
+            return Abilities[CurrentAbility].CanSpell();
+        }
+
+        public int Ultimate(IPlayer myself, IPlayer enemy, int round)
+        {
+            Abilities[CurrentAbility].Spell(myself, enemy, round);
+            return CurrentAbility;
+        }
+
+        public void Effect(IPlayer myself)
+        {
+            if (MyEffects.Count != 0)
+            {
+                foreach (var effect in MyEffects)
+                {
+                    effect.State(myself);
+                }
             }
         }
-    }
 
-    public void DeleteEffect(IPlayer myself, int round, int numberPlayer)
-    {
-        if (MyEffects.Count != 0)
+        public void DeleteEffect(IPlayer myself, int round, int numberPlayer)
         {
-            foreach (var effect in MyEffects.ToList())
+            if (MyEffects.Count != 0)
             {
-                effect.DeleteState(myself, round, numberPlayer);
+                foreach (var effect in MyEffects.ToList())
+                {
+                    effect.DeleteState(myself, round, numberPlayer);
+                }
             }
         }
-    }
 
-   public void RestoreAfterBattle()
-    {
-        if (NormalState is Normal normal)
+        public void RestoreAfterBattle()
         {
-            Health = normal.Health;
-            Strength = normal.Strength;
-        }
+            if (NormalState is Normal normal)
+            {
+                Health = normal.Health;
+                Strength = normal.Strength;
+            }
 
-        foreach (var ability in Abilities)
-        {
-            ability.NumberUses = 0;
-        }
+            foreach (var ability in Abilities)
+            {
+                ability.NumberUses = 0;
+            }
 
-        MyEffects.Clear();
+            MyEffects.Clear();
+        }
     }
 }
+

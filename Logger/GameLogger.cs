@@ -1,136 +1,141 @@
-public class GameLogger : ILogger
+namespace Logger
 {
-    public void PrintStart()
+    using Players;
+    using Effects;
+    public class GameLogger : ILogger
     {
-        Console.WriteLine("\nПриветствуем в Akvelon RPG SAGA!");
-    }
-
-    public void PrintStartSelectHero()
-    {
-        Console.WriteLine("Добавьте персонажей с новыми способностями!");
-    }
-
-    public void PrintSelectHero()
-    {
-        Console.WriteLine("\n1 - Огненный маг\n2 - Воин\n3 - Стрелок");
-    }
-
-    public void PrintWrongNumber()
-    {
-        Console.WriteLine("Неправильное число!");
-    }
-
-    public void PrintAddAbility(int heroChoice)
-    {
-        if (heroChoice == 1)
+        public void PrintStart()
         {
-            Console.WriteLine("Фаербол - наносит 2 * сила урона");
-            Console.WriteLine("Добавить? Да - Нет");
+            Console.WriteLine("\nПриветствуем в Akvelon RPG SAGA!");
         }
-        else if (heroChoice == 2)
+
+        public void PrintStartSelectHero()
         {
-            Console.WriteLine("Оглушающий удар - противник пропускает ход");
-            Console.WriteLine("Добавить? Да - Нет");
+            Console.WriteLine("Добавьте персонажей с новыми способностями!");
         }
-        else if (heroChoice == 3)
+
+        public void PrintSelectHero()
         {
-            Console.WriteLine("Ледяные стрелы - противник получает 10 урона за ход (можно применить один раз)");
-            Console.WriteLine("Добавить? Да - Нет");
+            Console.WriteLine("\n1 - Огненный маг\n2 - Воин\n3 - Стрелок");
         }
-    }
 
-    public void PrintStartNumberPlayers()
-    {
-        Console.WriteLine("\nПриступить к выбору количества игроков? Да - Нет");
-    }
-
-    public void PrintNumberPlayers()
-    {
-        Console.WriteLine("Выберите число игроков:");
-    }
-
-    public void PrintTour(int numberTour)
-    {
-        Console.WriteLine($"Кон {numberTour}.\n");
-
-    }
-
-    public void PrintAttack(IPlayer playerAttack, IPlayer playerDefend)
-    {
-        Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} наносит урон {playerAttack.Strength} противнику ({playerDefend.ClassName}) {playerDefend.Name}");
-    }
-
-    public void PrintUltimate(IPlayer playerAttack, IPlayer playerDefend, int randomUlt)
-    {
-        if (playerAttack.ClassName == "Маг")
+        public void PrintWrongNumber()
         {
-            Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Abilities[randomUlt].AbilityName}) на противника ({playerDefend.ClassName}) {playerDefend.Name}");
+            Console.WriteLine("Неправильное число!");
         }
-        else if (playerAttack.ClassName == "Рыцарь")
+
+        public void PrintAddAbility(int heroChoice)
         {
-            Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Abilities[randomUlt].AbilityName}) и наносит урон {playerAttack.Strength} противнику ({playerDefend.ClassName}) {playerDefend.Name}");
-        } else if (playerAttack.ClassName == "Лучник")
+            if (heroChoice == 1)
+            {
+                Console.WriteLine("Фаербол - наносит 2 * сила урона");
+                Console.WriteLine("Добавить? Да - Нет");
+            }
+            else if (heroChoice == 2)
+            {
+                Console.WriteLine("Оглушающий удар - противник пропускает ход");
+                Console.WriteLine("Добавить? Да - Нет");
+            }
+            else if (heroChoice == 3)
+            {
+                Console.WriteLine("Ледяные стрелы - противник получает 10 урона за ход (можно применить один раз)");
+                Console.WriteLine("Добавить? Да - Нет");
+            }
+        }
+
+        public void PrintStartNumberPlayers()
         {
-            Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Abilities[randomUlt].AbilityName}) и поджигает противника ({playerDefend.ClassName}) {playerDefend.Name}");
-        } else if (playerAttack.ClassName == "Огненный маг")
+            Console.WriteLine("\nПриступить к выбору количества игроков? Да - Нет");
+        }
+
+        public void PrintNumberPlayers()
         {
-            if (playerAttack.Abilities[randomUlt].AbilityName == "Заворожение")
+            Console.WriteLine("Выберите число игроков:");
+        }
+
+        public void PrintTour(int numberTour)
+        {
+            Console.WriteLine($"Кон {numberTour}.\n");
+
+        }
+
+        public void PrintAttack(IPlayer playerAttack, IPlayer playerDefend)
+        {
+            Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} наносит урон {playerAttack.Strength} противнику ({playerDefend.ClassName}) {playerDefend.Name}");
+        }
+
+        public void PrintUltimate(IPlayer playerAttack, IPlayer playerDefend, int randomUlt)
+        {
+            if (playerAttack.ClassName == "Маг")
             {
                 Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Abilities[randomUlt].AbilityName}) на противника ({playerDefend.ClassName}) {playerDefend.Name}");
             }
-            else
+            else if (playerAttack.ClassName == "Рыцарь")
             {
                 Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Abilities[randomUlt].AbilityName}) и наносит урон {playerAttack.Strength} противнику ({playerDefend.ClassName}) {playerDefend.Name}");
-            }
-        }
-        else if (playerAttack.ClassName == "Воин")
-        {
-            if (playerAttack.Abilities[randomUlt].AbilityName == "Удар возмездия")
-            {
-                Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Abilities[randomUlt].AbilityName}) и наносит урон {playerAttack.Strength} противнику ({playerDefend.ClassName}) {playerDefend.Name}");
-            }
-            else
-            {
-                Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Abilities[randomUlt].AbilityName}) на противника ({playerDefend.ClassName}) {playerDefend.Name}");
-            }
-        }
-        else if (playerAttack.ClassName == "Стрелок")
-        {
-            if (playerAttack.Abilities[randomUlt].AbilityName == "Огненные стрелы")
+            } else if (playerAttack.ClassName == "Лучник")
             {
                 Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Abilities[randomUlt].AbilityName}) и поджигает противника ({playerDefend.ClassName}) {playerDefend.Name}");
-            }
-            else
+            } else if (playerAttack.ClassName == "Огненный маг")
             {
-                Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Abilities[randomUlt].AbilityName}) на противника ({playerDefend.ClassName}) {playerDefend.Name}");
+                if (playerAttack.Abilities[randomUlt].AbilityName == "Заворожение")
+                {
+                    Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Abilities[randomUlt].AbilityName}) на противника ({playerDefend.ClassName}) {playerDefend.Name}");
+                }
+                else
+                {
+                    Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Abilities[randomUlt].AbilityName}) и наносит урон {playerAttack.Strength} противнику ({playerDefend.ClassName}) {playerDefend.Name}");
+                }
+            }
+            else if (playerAttack.ClassName == "Воин")
+            {
+                if (playerAttack.Abilities[randomUlt].AbilityName == "Удар возмездия")
+                {
+                    Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Abilities[randomUlt].AbilityName}) и наносит урон {playerAttack.Strength} противнику ({playerDefend.ClassName}) {playerDefend.Name}");
+                }
+                else
+                {
+                    Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Abilities[randomUlt].AbilityName}) на противника ({playerDefend.ClassName}) {playerDefend.Name}");
+                }
+            }
+            else if (playerAttack.ClassName == "Стрелок")
+            {
+                if (playerAttack.Abilities[randomUlt].AbilityName == "Огненные стрелы")
+                {
+                    Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Abilities[randomUlt].AbilityName}) и поджигает противника ({playerDefend.ClassName}) {playerDefend.Name}");
+                }
+                else
+                {
+                    Console.WriteLine($"({playerAttack.ClassName}) {playerAttack.Name} использует ({playerAttack.Abilities[randomUlt].AbilityName}) на противника ({playerDefend.ClassName}) {playerDefend.Name}");
+                }
             }
         }
-    }
 
-    public void PrintEffect(IPlayer player)
-    {
-        foreach (var effect in player.MyEffects)
+        public void PrintEffect(IPlayer player)
         {
-            if (effect is Stun)
+            foreach (var effect in player.MyEffects)
             {
-                Console.WriteLine($"({player.ClassName}) {player.Name} пропускает ход!");
+                if (effect is Stun)
+                {
+                    Console.WriteLine($"({player.ClassName}) {player.Name} пропускает ход!");
+                }
+
+                if (effect is LongDamage longDamage)
+                {
+                    Console.WriteLine($"({player.ClassName}) {player.Name} получает урон {longDamage.Factor}");
+                }
             }
 
-            if (effect is LongDamage longDamage)
-            {
-                Console.WriteLine($"({player.ClassName}) {player.Name} получает урон {longDamage.Factor}");
-            }
         }
 
-    }
+        public void PrintDefeat(IPlayer loser)
+        {
+            Console.WriteLine($"({loser.ClassName}) {loser.Name} погибает! \n\n");
+        }
 
-    public void PrintDefeat(IPlayer loser)
-    {
-        Console.WriteLine($"({loser.ClassName}) {loser.Name} погибает! \n\n");
-    }
-
-    public void PrintEnd(IPlayer winner)
-    {
-        Console.WriteLine($"({winner.ClassName}) {winner.Name} побеждает! \nThe END...");
+        public void PrintEnd(IPlayer winner)
+        {
+            Console.WriteLine($"({winner.ClassName}) {winner.Name} побеждает! \nThe END...");
+        }
     }
 }

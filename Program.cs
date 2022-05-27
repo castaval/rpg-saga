@@ -1,5 +1,6 @@
 ﻿namespace Base
 {
+    using Logger;
     public class Program
     {
         public static void Main(string[] args)

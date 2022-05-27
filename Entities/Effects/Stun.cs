@@ -1,27 +1,31 @@
-public class Stun : IEffect
+namespace Effects
 {
-    public int LastUsedRound { get; set; }
-
-    public Stun(int round)
+    using Players;
+    public class Stun : IEffect
     {
-        LastUsedRound = round;
-    }
+        public int LastUsedRound { get; set; }
 
-    public void State(IPlayer Player)
-    {
-        Player.Strength = 0;
-    }
-
-    public void DeleteState(IPlayer Player, int Round, int numberPlayer)
-    {
-        foreach (var effect in Player.MyEffects.ToList())
+        public Stun(int round)
         {
-            if (effect is Stun stun)
+            LastUsedRound = round;
+        }
+
+        public void State(IPlayer Player)
+        {
+            Player.Strength = 0;
+        }
+
+        public void DeleteState(IPlayer Player, int Round, int numberPlayer)
+        {
+            foreach (var effect in Player.MyEffects.ToList())
             {
-                if ((Round - effect.LastUsedRound == 1 && numberPlayer == 2) || (Round - effect.LastUsedRound == 2 && numberPlayer == 1))
+                if (effect is Stun stun)
                 {
-                    Player.MyEffects.Remove(stun);
-                    if (Player.NormalState is Normal normal) normal.RestoreStrength(Player);
+                    if ((Round - effect.LastUsedRound == 1 && numberPlayer == 2) || (Round - effect.LastUsedRound == 2 && numberPlayer == 1))
+                    {
+                        Player.MyEffects.Remove(stun);
+                        if (Player.NormalState is Normal normal) normal.RestoreStrength(Player);
+                    }
                 }
             }
         }

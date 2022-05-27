@@ -1,20 +1,26 @@
-public class VengeanceStrike : IAbility
+namespace Abilities
 {
-    public int NumberUses { get; set; } = 0;
-
-    public string AbilityName { get; set; } = "Удар возмездия";
-    public void Spell(IPlayer myself, IPlayer enemy, int round)
+    using Players;
+    using Effects;
+    public class VengeanceStrike : IAbility
     {
-        IEffect generateBuff = new Buff(1.3, round);;
-        myself.MyEffects.Add(generateBuff);
-        int indexEffect = myself.MyEffects.IndexOf(generateBuff);
-        myself.MyEffects[indexEffect].State(myself);
-        enemy.Health -= myself.Strength;
-        NumberUses++;
-    }
+        public int NumberUses { get; set; } = 0;
 
-    public bool CanSpell()
-    {
-        return true;
+        public string AbilityName { get; set; } = "Удар возмездия";
+        public void Spell(IPlayer myself, IPlayer enemy, int round)
+        {
+            IEffect generateBuff = new Buff(1.3, round);;
+            myself.MyEffects.Add(generateBuff);
+            int indexEffect = myself.MyEffects.IndexOf(generateBuff);
+            myself.MyEffects[indexEffect].State(myself);
+            enemy.Health -= myself.Strength;
+            NumberUses++;
+        }
+
+        public bool CanSpell()
+        {
+            return true;
+        }
     }
 }
+

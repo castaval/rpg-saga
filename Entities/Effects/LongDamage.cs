@@ -1,34 +1,38 @@
-public class LongDamage : IEffect
+namespace Effects
 {
-    public int Factor { get; set; }
-
-    public int LastUsedRound { get; set; }
-
-
-    public LongDamage(int factor, int round)
+    using Players;
+    public class LongDamage : IEffect
     {
-        Factor = factor;
-        LastUsedRound = round;
-    }
+        public int Factor { get; set; }
 
-    public void State(IPlayer enemy)
-    {
-        enemy.Health -= Factor;
-    }
+        public int LastUsedRound { get; set; }
 
-    public void DeleteState(IPlayer Player, int Round, int numberPlayer)
-    {
-        if ((Round - LastUsedRound == 10 && numberPlayer == 2) || (Round - LastUsedRound == 11 && numberPlayer == 1))
+
+        public LongDamage(int factor, int round)
         {
-            foreach (var effect in Player.MyEffects.ToList())
-            {
-                if (effect is LongDamage longDamage)
-                {
-                    Player.MyEffects.Remove(longDamage);
-                }
-            }
+            Factor = factor;
+            LastUsedRound = round;
         }
 
+        public void State(IPlayer enemy)
+        {
+            enemy.Health -= Factor;
+        }
 
+        public void DeleteState(IPlayer Player, int Round, int numberPlayer)
+        {
+            if ((Round - LastUsedRound == 10 && numberPlayer == 2) || (Round - LastUsedRound == 11 && numberPlayer == 1))
+            {
+                foreach (var effect in Player.MyEffects.ToList())
+                {
+                    if (effect is LongDamage longDamage)
+                    {
+                        Player.MyEffects.Remove(longDamage);
+                    }
+                }
+            }
+
+
+        }
     }
 }

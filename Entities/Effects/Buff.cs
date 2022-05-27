@@ -1,30 +1,34 @@
-public class Buff : IEffect
+namespace Effects
 {
-    public double Factor { get; set; }
-
-    public int LastUsedRound { get; set; }
-
-    public Buff(double factor, int round)
+    using Players;
+    public class Buff : IEffect
     {
-        Factor = factor;
-        LastUsedRound = round;
-    }
+        public double Factor { get; set; }
 
-    public void State(IPlayer Player)
-    {
-        Player.Strength = (int)((double)Player.Strength * Factor);
-    }
+        public int LastUsedRound { get; set; }
 
-    public void DeleteState(IPlayer Player, int Round, int numberPlayer)
-    {
-        if (Round - LastUsedRound == 1)
+        public Buff(double factor, int round)
         {
-            if (Player.NormalState is Normal normal) normal.RestoreStrength(Player);
-            foreach (var effect in Player.MyEffects.ToList())
+            Factor = factor;
+            LastUsedRound = round;
+        }
+
+        public void State(IPlayer Player)
+        {
+            Player.Strength = (int)((double)Player.Strength * Factor);
+        }
+
+        public void DeleteState(IPlayer Player, int Round, int numberPlayer)
+        {
+            if (Round - LastUsedRound == 1)
             {
-                if (effect is Buff buff)
+                if (Player.NormalState is Normal normal) normal.RestoreStrength(Player);
+                foreach (var effect in Player.MyEffects.ToList())
                 {
-                    Player.MyEffects.Remove(buff);
+                    if (effect is Buff buff)
+                    {
+                        Player.MyEffects.Remove(buff);
+                    }
                 }
             }
         }

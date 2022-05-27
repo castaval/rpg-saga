@@ -1,108 +1,114 @@
-public class Fight
+namespace Fight
 {
-    private ILogger Logger { get; set; }
-    private IPlayer FirstPlayer { get; set; }
-    private IPlayer SecondPlayer { get; set; }
-    private int round { get; set; } = 1;
-    List <IPlayer> AllPlayers { get; set; }
-
-    public Fight(IPlayer firstPlayer, IPlayer secondPlayer, ref List<IPlayer> allPlayers, ILogger logger)
+    using Players;
+    using Logger;
+    using Effects;
+    public class Fight
     {
-        FirstPlayer = firstPlayer;
-        SecondPlayer = secondPlayer;
-        AllPlayers = allPlayers;
-        Logger = logger;
-    }
+        private ILogger Logger { get; set; }
+        private IPlayer FirstPlayer { get; set; }
+        private IPlayer SecondPlayer { get; set; }
+        private int round { get; set; } = 1;
+        List <IPlayer> AllPlayers { get; set; }
 
-    public void Battle()
-    {
-        bool stopGame;
-        while (true)
+        public Fight(IPlayer firstPlayer, IPlayer secondPlayer, ref List<IPlayer> allPlayers, ILogger logger)
         {
-            stopGame = PlayerTurn(FirstPlayer, SecondPlayer, 1);
-
-            if (stopGame)
-            {
-                break;
-            }
-
-            stopGame = PlayerTurn(SecondPlayer, FirstPlayer, 2);
-
-            if (stopGame)
-            {
-                break;
-            }
-
-            round++;
-        }
-    }
-
-    private bool PlayerTurn(IPlayer playerGame, IPlayer playerWait, int numberPlayer)
-    {
-        Random rand = new Random();
-        bool stopGame = false;
-        bool isStun = false;
-
-        playerGame.DeleteEffect(playerGame, round, numberPlayer);
-        playerGame.Effect(playerGame);
-        Logger.PrintEffect(playerGame);
-
-        if (IsDefeat(playerGame, playerWait))
-        {
-            stopGame = true;
-            return stopGame;
+            FirstPlayer = firstPlayer;
+            SecondPlayer = secondPlayer;
+            AllPlayers = allPlayers;
+            Logger = logger;
         }
 
-        foreach (var effect in playerGame.MyEffects)
+        public void Battle()
         {
-            if (effect is Stun)
+            bool stopGame;
+            while (true)
             {
-                isStun = true;
-            }
-        }
+                stopGame = PlayerTurn(FirstPlayer, SecondPlayer, 1);
 
-        if (!isStun)
-        {
-            if (rand.Next(0, 3) > 0)
-            {
-                playerGame.AttackEnemy(playerWait);
-                Logger.PrintAttack(playerGame, playerWait);
-            }
-            else
-            {
-                playerGame.EnterCurrentAbility();
-                if (playerGame.CanUltimate())
+                if (stopGame)
                 {
-                    int randomUlt = playerGame.Ultimate(playerGame, playerWait, round);
-                    Logger.PrintUltimate(playerGame, playerWait, randomUlt);
+                    break;
                 }
-                else
+
+                stopGame = PlayerTurn(SecondPlayer, FirstPlayer, 2);
+
+                if (stopGame)
+                {
+                    break;
+                }
+
+                round++;
+            }
+        }
+
+        private bool PlayerTurn(IPlayer playerGame, IPlayer playerWait, int numberPlayer)
+        {
+            Random rand = new Random();
+            bool stopGame = false;
+            bool isStun = false;
+
+            playerGame.DeleteEffect(playerGame, round, numberPlayer);
+            playerGame.Effect(playerGame);
+            Logger.PrintEffect(playerGame);
+
+            if (IsDefeat(playerGame, playerWait))
+            {
+                stopGame = true;
+                return stopGame;
+            }
+
+            foreach (var effect in playerGame.MyEffects)
+            {
+                if (effect is Stun)
+                {
+                    isStun = true;
+                }
+            }
+
+            if (!isStun)
+            {
+                if (rand.Next(0, 3) > 0)
                 {
                     playerGame.AttackEnemy(playerWait);
                     Logger.PrintAttack(playerGame, playerWait);
                 }
+                else
+                {
+                    playerGame.EnterCurrentAbility();
+                    if (playerGame.CanUltimate())
+                    {
+                        int randomUlt = playerGame.Ultimate(playerGame, playerWait, round);
+                        Logger.PrintUltimate(playerGame, playerWait, randomUlt);
+                    }
+                    else
+                    {
+                        playerGame.AttackEnemy(playerWait);
+                        Logger.PrintAttack(playerGame, playerWait);
+                    }
+                }
             }
-        }
 
-        if (IsDefeat(playerWait, playerGame))
-        {
-            stopGame = true;
+            if (IsDefeat(playerWait, playerGame))
+            {
+                stopGame = true;
+                return stopGame;
+            }
+
             return stopGame;
         }
 
-        return stopGame;
-    }
-
-    private bool IsDefeat(IPlayer loser, IPlayer winner)
-    {
-        if (loser.Health <= 0)
+        private bool IsDefeat(IPlayer loser, IPlayer winner)
         {
-            Logger.PrintDefeat(loser);
-            AllPlayers.Remove(loser);
-            winner.RestoreAfterBattle();
-            return true;
-        }
+            if (loser.Health <= 0)
+            {
+                Logger.PrintDefeat(loser);
+                AllPlayers.Remove(loser);
+                winner.RestoreAfterBattle();
+                return true;
+            }
 
-        return false;
+            return false;
+        }
     }
 }

@@ -1,24 +1,28 @@
-public class IceArrows : IAbility
+namespace Abilities
 {
-    public int NumberUses { get; set; } = 0;
-    private int MaxUses { get; set; } = 1;
-    public string AbilityName { get; set; } = "Ледяные стрелы";
-    public void Spell(IPlayer myself, IPlayer enemy, int round)
+    using Players;
+    using Effects;
+    public class IceArrows : IAbility
     {
-        enemy.MyEffects.Add(new LongDamage(10, round));
-        NumberUses++;
-    }
-
-    public bool CanSpell()
-    {
-        if (NumberUses < MaxUses)
+        public int NumberUses { get; set; } = 0;
+        private int MaxUses { get; set; } = 1;
+        public string AbilityName { get; set; } = "Ледяные стрелы";
+        public void Spell(IPlayer myself, IPlayer enemy, int round)
         {
-            return true;
+            enemy.MyEffects.Add(new LongDamage(10, round));
+            NumberUses++;
         }
-        else
+
+        public bool CanSpell()
         {
-            return false;
+            if (NumberUses < MaxUses)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
-

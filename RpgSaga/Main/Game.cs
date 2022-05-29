@@ -17,7 +17,7 @@ namespace Base
             Logger = GameLogger;
             numberTour = 1;
 
-            const string filepath = @"/home/alexander/Develop/rpg-saga-refactoring/KEKW/rpg-saga/Main/Names.json";
+            const string filepath = @"/home/alexander/Develop/rpg-saga-refactoring/KEKW/rpg-saga/RpgSaga/Main/Names.json";
             var json = File.ReadAllText(filepath);
             playerNames = JsonSerializer.Deserialize<List<Names>>(json);
         }

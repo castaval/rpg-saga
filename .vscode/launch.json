@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/net6.0/rpg-saga.dll",
+            "program": "${workspaceFolder}/RpgSaga/bin/Debug/net6.0/rpg-saga.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",

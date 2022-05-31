@@ -1,4 +1,4 @@
-namespace Selector
+namespace SelectorGame
 {
     using Logger;
     public class Selector

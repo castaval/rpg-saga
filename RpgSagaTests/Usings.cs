@@ -1,8 +1,10 @@
 global using Xunit;
-using Players;
-using PlayersGenerator;
-using Base;
-using Selector;
-using Abilities;
-using Effects;
-using Fight;
+global using Players;
+global using PlayersGenerator;
+global using Base;
+global using SelectorGame;
+global using Abilities;
+global using Effects;
+global using Fight;
+global using Logger;
+global using System.Text;

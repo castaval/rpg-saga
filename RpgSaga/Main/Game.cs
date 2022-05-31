@@ -2,7 +2,7 @@ namespace Base
 {
     using System.Text.Json;
     using Logger;
-    using Selector;
+    using SelectorGame;
     using PlayersGenerator;
     using Players;
     using Fight;

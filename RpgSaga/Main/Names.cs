@@ -1,4 +1,4 @@
-namespace Names
+namespace PlayerNames
 {
     public class Names
     {

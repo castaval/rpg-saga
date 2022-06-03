@@ -1,7 +1,7 @@
-namespace PlayersGenerator
+namespace GeneratePlayers
 {
     using Players;
-    using Names;
+    using PlayerNames;
     public class PlayersGenerator {
         private int PlayersCount { get; set; }
         private List<Names> PlayerNames { get; set; }

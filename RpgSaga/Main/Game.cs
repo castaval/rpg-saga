@@ -3,10 +3,10 @@ namespace Base
     using System.Text.Json;
     using Logger;
     using SelectorGame;
-    using PlayersGenerator;
+    using GeneratePlayers;
     using Players;
     using Fight;
-    using Names;
+    using PlayerNames;
     public class Game
     {
         private ILogger Logger { get; set; }

@@ -1,6 +1,7 @@
 namespace RpgSagaTests;
 
 
+[Collection("Sequential")]
 public class SelectorTest
 {
     [Theory]

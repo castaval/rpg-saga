@@ -1,6 +1,6 @@
 global using Xunit;
 global using Players;
-global using PlayersGenerator;
+global using GeneratePlayers;
 global using Base;
 global using SelectorGame;
 global using Abilities;
@@ -8,3 +8,4 @@ global using Effects;
 global using Fight;
 global using Logger;
 global using System.Text;
+global using PlayerNames;

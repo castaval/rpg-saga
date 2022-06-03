@@ -35,4 +35,35 @@ public class SelectorTest
         // Assert
         Assert.True(result);
     }
+
+    [Theory]
+    [InlineData("10")]
+    [InlineData("11", "12")]
+    [InlineData("12")]
+    public void SelectNumbPlayersTest(string number, string secondNumber = "14")
+    {
+        // Arrange
+        var selector = new Selector(new GameLogger());
+        var stringBuilder = new StringBuilder();
+        stringBuilder.AppendLine(number);
+
+        if (!(Int32.Parse(number) % 2 == 0))
+        {
+            stringBuilder.AppendLine(secondNumber);
+        }
+
+        var stringReader = new StringReader(stringBuilder.ToString());
+        Console.SetIn(stringReader);
+
+        // Act
+        var result = false;
+        var player = selector.SelectNumbPlayers();
+        if (player % 2 == 0)
+        {
+            result = true;
+        }
+
+        // Assert
+        Assert.True(result);
+    }
 }

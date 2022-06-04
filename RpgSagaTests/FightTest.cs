@@ -48,6 +48,25 @@ public class FightTest
     }
 
     [Fact]
+    public void StunTest()
+    {
+        // Arrange
+        IPlayer firstPlayer = new Archer("Мax", 30, 40, "Лучник");
+        IPlayer secondPlayer = new Mage("Nikita", 20, 40, "Маг");
+        var result = false;
+
+        // Act
+        secondPlayer.Ultimate(secondPlayer, firstPlayer, 1);
+        if (firstPlayer.MyEffects[0] is Stun)
+        {
+            result = true;
+        }
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
     public void EffectTest()
     {
         // Arrange

@@ -1,10 +1,18 @@
 namespace BinaryTree;
 
-internal class Node<T>
-{
-    public T data { get; set; }
+using Players;
 
-    public Node<T> NodeLeft { get; set; }
-    public Node<T> NodeRight { get; set; }
-    public Node<T> NodeParent { get; set; }
+public class Node<T> where T: IPlayer
+{
+    public T Data { get; set; }
+
+    public int index { get; set; } = 0;
+
+    public Node(T data)
+    {
+        Data = data;
+    }
+
+    public Node<T>? NodeLeft { get; set; } = null;
+    public Node<T>? NodeRight { get; set; } = null;
 }

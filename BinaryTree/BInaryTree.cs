@@ -1,16 +1,30 @@
 ﻿namespace BinaryTree;
-public class BinaryTree
+using Players;
+
+public class BinaryTree<T> where T: IPlayer
 {
-    public Node<T> Root { get; set; }
+    public Node<T>? Root { get; set; } = null;
 
-    public void Add (T player)
+    public void Insert (T data)
     {
-        Node before = null, after = this.Root;
+        Root = InnerInsert(data, Root);
+        Root.index++;
+    }
 
-        while (after != null)
+    private Node<T> InnerInsert(T data, Node<T>? root)
+    {
+        if (root == null)
+            return new Node<T>(data);
+
+        if (root.Data.Strength > data.Strength)
         {
-            before = after;
-
+            root.NodeLeft = InnerInsert(data, root.NodeLeft);
         }
+        else if (root.Data.Strength < data.Strength)
+        {
+            root.NodeRight = InnerInsert(data, root.NodeRight);
+        }
+
+        return root;
     }
 }

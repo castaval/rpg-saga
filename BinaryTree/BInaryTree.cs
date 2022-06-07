@@ -5,10 +5,12 @@ public class BinaryTree<T> where T: IPlayer
 {
     public Node<T>? Root { get; set; } = null;
 
+    public int Index { get; set; } = 0;
+
     public void Insert (T data)
     {
         Root = InnerInsert(data, Root);
-        Root.index++;
+        Root.index = Index++;
     }
 
     private Node<T> InnerInsert(T data, Node<T>? root)

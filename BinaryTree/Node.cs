@@ -1,4 +1,4 @@
-namespace BinaryTree;
+namespace BinaryTreePlayers;
 
 using Players;
 

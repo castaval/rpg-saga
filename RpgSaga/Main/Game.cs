@@ -92,24 +92,16 @@ namespace Base
 
         public void BTree()
         {
-            // BinaryTree<IPlayer> tree = new BinaryTree<IPlayer>();
-            // tree.Insert(new Archer("Max1", 31, 11, "Лучник"));
-            // tree.Insert(new Archer("Max2", 32, 12, "Лучник"));
-            // tree.Insert(new Archer("Max3", 33, 13, "Лучник"));
-            // tree.Insert(new Archer("Max4", 34, 14, "Лучник"));
-            // tree.Print();
+            BinaryTree<IPlayer> tree = new BinaryTree<IPlayer>();
+            tree.Insert(new Archer("Max1", 31, 11, "Лучник"));
+            tree.Insert(new Archer("Max2", 32, 12, "Лучник"));
+            tree.Insert(new Archer("Max3", 29, 13, "Лучник"));
+            tree.Insert(new Archer("Max4", 34, 14, "Лучник"));
+            Console.Clear();
+            tree.Print();
 
 
-            BTree btr = new BTree();
-            btr.Add(6);
-            btr.Add(2);
-            btr.Add(3);
-            btr.Add(11);
-            btr.Add(30);
-            btr.Add(9);
-            btr.Add(13);
-            btr.Add(18);
-            btr.Root.Print();
+
         }
 
 

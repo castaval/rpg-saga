@@ -107,6 +107,7 @@ namespace Fight
             if (loser.Health <= 0)
             {
                 Logger.PrintDefeat(loser);
+
                 AllPlayers.Remove(loser);
                 winner.RestoreAfterBattle();
                 return true;

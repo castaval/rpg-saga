@@ -6,16 +6,43 @@
     {
         public Node<T>? Root { get; set; } = null;
 
+        public int? RootIndex { get; set; }
+
         public int Index { get; set; } = 0;
 
-        public void Insert(T data)
+        public int Weight { get; set; } = 1;
+
+        public int HeightEmptyTree { get; set; }
+
+        public bool Empty { get; set; }
+
+        public bool emptyPotomki { get; set; } = true;
+
+        public BinaryTree(T? zero, int height = 0, bool empty = false)
+        {
+            HeightEmptyTree = height;
+            RootIndex = (int)Math.Pow(2, HeightEmptyTree) / 2;
+            Empty = empty;
+
+            if (Empty)
+            {
+                for (int i = 0; i < (Math.Pow(2, HeightEmptyTree) - 1); i++)
+                {
+
+                    Root = InnerInsert(zero, Root);
+
+                }
+            }
+        }
+
+        public void Insert(T? data)
         {
             Root = InnerInsert(data, Root);
-            Root.Index = Index++;
         }
 
         public void RemoveData(T data)
         {
+
             Root = RemoveInnerData(Root, data);
         }
 
@@ -30,9 +57,20 @@
             int rootTop = Console.CursorTop + topMargin;
             var last = new List<NodeInfo<T>>();
             var next = Root;
+            string text;
+
+            if (Empty)
+            {
+                text = "( )";
+            }
+            else
+            {
+                text = $"({next.Data.ClassName}) {next.Data.Name} {next.Weight}";
+            }
+
             for (int level = 0; next != null; level++)
             {
-                var element = new NodeInfo<T> { Node = next, Text = $"({next.Data.ClassName}) {next.Data.Name}" };
+                var element = new NodeInfo<T> { Node = next, Text = text };
                 if (level < last.Count)
                 {
                     element.StartPos = last[level].EndPos + spacing;
@@ -97,18 +135,67 @@
             while (Console.CursorLeft < right) Console.Write(s);
         }
 
-        private Node<T> InnerInsert(T data, Node<T>? root)
+        private Node<T> InnerInsert(T? data, Node<T>? root)
         {
-            if (root == null)
-                return new Node<T>(data);
 
-            if (root.Data.Strength > data.Strength)
+            if (root == null)
             {
-                root.NodeLeft = InnerInsert(data, root.NodeLeft);
+                var newNode = new Node<T>(data);
+                newNode.Weight = Weight;
+                Weight = 1;
+                newNode.Index = RootIndex / 2;
+                return new Node<T>(data);
             }
-            else if (root.Data.Strength < data.Strength)
+
+            if (!Empty)
             {
-                root.NodeRight = InnerInsert(data, root.NodeRight);
+                if (root.Data.Strength > data.Strength)
+                {
+                    Weight++;
+                    root.NodeLeft = InnerInsert(data, root.NodeLeft);
+
+                }
+                else if (root.Data.Strength < data.Strength)
+                {
+                    Weight++;
+                    root.NodeRight = InnerInsert(data, root.NodeRight);
+                }
+            }
+            else
+            {
+                // int level = 1;
+                // root = new Node<T>(data);
+                // root.NodeLeft = new Node<T>(data);
+                // root.NodeRight = new Node<T>(data);
+                // root.NodeLeft.NodeRight = new Node<T>(data);
+                // root.NodeRight.NodeLeft = new Node<T>(data);
+
+                // for (int i = 0; i < HeightEmptyTree; i++)
+                // {
+                //     root.NodeLeft
+                //     root.NodeRight
+                // }
+
+                if (root.NodeLeft == null)
+                {
+                    root.NodeLeft = InnerInsert(data, root.NodeLeft);
+                }
+                else if (root.NodeRight == null)
+                {
+                    root.NodeRight = InnerInsert(data, root.NodeRight);
+                }
+                else if (root.NodeLeft != null && root.NodeRight != null)
+                {
+                    emptyPotomki = false;
+                }
+
+                if (emptyPotomki == false)
+                {
+                    root.NodeLeft = InnerInsert(data, root.NodeLeft);
+                    root.NodeRight = InnerInsert(data, root.NodeRight);
+                    emptyPotomki = true;
+                }
+
             }
 
             return root;

@@ -8,6 +8,8 @@
 
         public int? RootIndex { get; set; }
 
+        public List<Node<T>> IndexList { get; set; } = new List<Node<T>>();
+
         public int Index { get; set; } = 0;
 
         public bool Empty { get; set; }
@@ -52,6 +54,8 @@
                     Root = RecursiveInsertEmpty(Root, newItem);
                 }
             }
+
+            AcrossIndex();
         }
 
         private Node<T> RecursiveInsert(Node<T> current, Node<T> n)
@@ -125,9 +129,34 @@
         }
 
         public void Delete(T target)
-        {//and here
+        {
             Root = Delete(Root, target);
+            AcrossIndex();
         }
+
+        private void AcrossIndex()
+        {
+            IndexList.Clear();
+            var queue = new Queue<Node<T>>();
+            queue.Enqueue(Root);
+
+            while (queue.Count != 0)
+            {
+                if (queue.Peek().NodeLeft != null)
+                {
+
+                    queue.Enqueue(queue.Peek().NodeLeft);
+                }
+                if (queue.Peek().NodeRight != null)
+                {
+
+                    queue.Enqueue(queue.Peek().NodeRight);
+                }
+
+                IndexList.Add(queue.Dequeue());
+            }
+
+        } 
 
         private Node<T> Delete(Node<T> current, T target)
         {
@@ -206,6 +235,7 @@
                 Console.WriteLine("Nothing found!");
             }
         }
+
         private Node<T> Find(T target, Node<T> current)
         {
 

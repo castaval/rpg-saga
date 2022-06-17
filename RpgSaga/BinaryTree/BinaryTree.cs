@@ -10,45 +10,224 @@
 
         public int Index { get; set; } = 0;
 
-        public int Weight { get; set; } = 1;
-
-        public int HeightEmptyTree { get; set; }
-
         public bool Empty { get; set; }
-
-        public bool emptyPotomki { get; set; } = true;
 
         public BinaryTree(T? zero, int height = 0, bool empty = false)
         {
-            HeightEmptyTree = height;
-            RootIndex = (int)Math.Pow(2, HeightEmptyTree) / 2;
+            RootIndex = (int)Math.Pow(2, height) / 2;
             Empty = empty;
 
             if (Empty)
             {
-                for (int i = 0; i < (Math.Pow(2, HeightEmptyTree) - 1); i++)
+                for (int i = 0; i < (Math.Pow(2, height) - 1); i++)
                 {
 
-                    Root = InnerInsert(zero, Root);
-
+                    Add(zero);
                 }
             }
         }
 
-        public void Insert(T? data)
+        public void Add(T? data)
         {
-            Root = InnerInsert(data, Root);
+            Node<T> newItem = new Node<T>(data);
+
+            if (Empty)
+            {
+                newItem.Index = Index++;
+            }
+
+
+            if (Root == null)
+            {
+                Root = newItem;
+            }
+            else
+            {
+                if (!Empty)
+                {
+                    Root = RecursiveInsert(Root, newItem);
+                }
+                else
+                {
+                    Root = RecursiveInsertEmpty(Root, newItem);
+                }
+            }
         }
 
-        public void RemoveData(T data)
+        private Node<T> RecursiveInsert(Node<T> current, Node<T> n)
         {
+            if (current == null)
+            {
+                current = n;
+                return current;
+            }
+            else if (n.Data.Strength < current.Data.Strength)
+            {
+                current.NodeLeft = RecursiveInsert(current.NodeLeft, n);
+                current = balance_tree(current);
+            }
+            else if (n.Data.Strength > current.Data.Strength)
+            {
+                current.NodeRight = RecursiveInsert(current.NodeRight, n);
+                current = balance_tree(current);
+            }
 
-            Root = RemoveInnerData(Root, data);
+            return current;
         }
 
-        public void RemoveIndex(int index)
+        private Node<T> RecursiveInsertEmpty(Node<T> current, Node<T> n)
         {
-            Root = RemoveInnerIndex(Root, index);
+            if (current == null)
+            {
+                current = n;
+                return current;
+            }
+            else if (n.Index < current.Index)
+            {
+                current.NodeLeft = RecursiveInsertEmpty(current.NodeLeft, n);
+                current = balance_tree(current);
+            }
+            else if (n.Index > current.Index)
+            {
+                current.NodeRight = RecursiveInsertEmpty(current.NodeRight, n);
+                current = balance_tree(current);
+            }
+
+            return current;
+        }
+
+        private Node<T> balance_tree(Node<T> current)
+        {
+            int b_factor = balance_factor(current);
+            if (b_factor > 1)
+            {
+                if (balance_factor(current.NodeLeft) > 0)
+                {
+                    current = RotateLL(current);
+                }
+                else
+                {
+                    current = RotateLR(current);
+                }
+            }
+            else if (b_factor < -1)
+            {
+                if (balance_factor(current.NodeRight) > 0)
+                {
+                    current = RotateRL(current);
+                }
+                else
+                {
+                    current = RotateRR(current);
+                }
+            }
+            return current;
+        }
+
+        public void Delete(T target)
+        {//and here
+            Root = Delete(Root, target);
+        }
+
+        private Node<T> Delete(Node<T> current, T target)
+        {
+            Node<T> parent;
+
+            if (current == null)
+                return null;
+            else
+            {
+                if (target.Strength < current.Data.Strength)
+                {
+                    current.NodeLeft = Delete(current.NodeLeft, target);
+                    if (balance_factor(current) == -2)//here
+                    {
+                        if (balance_factor(current.NodeRight) <= 0)
+                        {
+                            current = RotateRR(current);
+                        }
+                        else
+                        {
+                            current = RotateRL(current);
+                        }
+                    }
+                }
+                else if (target.Strength > current.Data.Strength)
+                {
+                    current.NodeRight = Delete(current.NodeRight, target);
+                    if (balance_factor(current) == 2)
+                    {
+                        if (balance_factor(current.NodeLeft) >= 0)
+                        {
+                            current = RotateLL(current);
+                        }
+                        else
+                        {
+                            current = RotateLR(current);
+                        }
+                    }
+                }
+                else
+                {
+                    if (current.NodeRight != null)
+                    {
+                        parent = current.NodeRight;
+                        while (parent.NodeLeft != null)
+                        {
+                            parent = parent.NodeLeft;
+                        }
+                        current.Data = parent.Data;
+                        current.NodeRight = Delete(current.NodeRight, parent.Data);
+                        if (balance_factor(current) == 2)
+                        {
+                            if (balance_factor(current.NodeLeft) >= 0)
+                            {
+                                current = RotateLL(current);
+                            }
+                            else { current = RotateLR(current); }
+                        }
+                    }
+                    else
+                    {
+                        return current.NodeLeft;
+                    }
+                }
+            }
+            return current;
+        }
+        public void Find(T key)
+        {
+            if (Find(key, Root).Data.Strength == key.Strength)
+            {
+                Console.WriteLine("{0} was found!", key);
+            }
+            else
+            {
+                Console.WriteLine("Nothing found!");
+            }
+        }
+        private Node<T> Find(T target, Node<T> current)
+        {
+
+            if (target.Strength < current.Data.Strength)
+            {
+                if (target.Strength == current.Data.Strength)
+                {
+                    return current;
+                }
+                else
+                return Find(target, current.NodeLeft);
+            }
+            else
+            {
+                if (target.Strength == current.Data.Strength)
+                {
+                    return current;
+                }
+                else
+                return Find(target, current.NodeRight);
+            }
+
         }
 
         public void Print(int spacing = 1, int topMargin = 2, int leftMargin = 2)
@@ -59,17 +238,17 @@
             var next = Root;
             string text;
 
-            if (Empty)
-            {
-                text = "( )";
-            }
-            else
-            {
-                text = $"({next.Data.ClassName}) {next.Data.Name} {next.Weight}";
-            }
-
             for (int level = 0; next != null; level++)
             {
+                if (Empty)
+                {
+                    text = "( )";
+                }
+                else
+                {
+                    text = $"({next.Data.ClassName}) {next.Data.Name}";
+                }
+
                 var element = new NodeInfo<T> { Node = next, Text = text };
                 if (level < last.Count)
                 {
@@ -135,143 +314,52 @@
             while (Console.CursorLeft < right) Console.Write(s);
         }
 
-        private Node<T> InnerInsert(T? data, Node<T>? root)
+        private int balance_factor(Node<T> current)
         {
-
-            if (root == null)
-            {
-                var newNode = new Node<T>(data);
-                newNode.Weight = Weight;
-                Weight = 1;
-                newNode.Index = RootIndex / 2;
-                return new Node<T>(data);
-            }
-
-            if (!Empty)
-            {
-                if (root.Data.Strength > data.Strength)
-                {
-                    Weight++;
-                    root.NodeLeft = InnerInsert(data, root.NodeLeft);
-
-                }
-                else if (root.Data.Strength < data.Strength)
-                {
-                    Weight++;
-                    root.NodeRight = InnerInsert(data, root.NodeRight);
-                }
-            }
-            else
-            {
-                // int level = 1;
-                // root = new Node<T>(data);
-                // root.NodeLeft = new Node<T>(data);
-                // root.NodeRight = new Node<T>(data);
-                // root.NodeLeft.NodeRight = new Node<T>(data);
-                // root.NodeRight.NodeLeft = new Node<T>(data);
-
-                // for (int i = 0; i < HeightEmptyTree; i++)
-                // {
-                //     root.NodeLeft
-                //     root.NodeRight
-                // }
-
-                if (root.NodeLeft == null)
-                {
-                    root.NodeLeft = InnerInsert(data, root.NodeLeft);
-                }
-                else if (root.NodeRight == null)
-                {
-                    root.NodeRight = InnerInsert(data, root.NodeRight);
-                }
-                else if (root.NodeLeft != null && root.NodeRight != null)
-                {
-                    emptyPotomki = false;
-                }
-
-                if (emptyPotomki == false)
-                {
-                    root.NodeLeft = InnerInsert(data, root.NodeLeft);
-                    root.NodeRight = InnerInsert(data, root.NodeRight);
-                    emptyPotomki = true;
-                }
-
-            }
-
-            return root;
+            int l = getHeight(current.NodeLeft);
+            int r = getHeight(current.NodeRight);
+            int b_factor = l - r;
+            return b_factor;
         }
 
-        private Node<T>? RemoveInnerData(Node<T>? parent, T data)
+        private int getHeight(Node<T> current)
         {
-            if (parent == null) return parent;
-
-            if (data.Strength < parent.Data.Strength)
-                parent.NodeLeft = RemoveInnerData(parent.NodeLeft, data);
-            else if (data.Strength > parent.Data.Strength)
-                parent.NodeRight = RemoveInnerData(parent.NodeRight, data);
-            else
+            int height = 0;
+            if (current != null)
             {
-                if (parent.NodeLeft == null)
-                    return parent.NodeRight;
-                else if (parent.NodeRight == null)
-                    return parent.NodeLeft;
-
-                int minValueStrength;
-                int minValueIndex;
-
-                MinValue(parent.NodeRight, out minValueStrength, out minValueIndex);
-
-                parent.Data.Strength = minValueStrength;
-                parent.Index = minValueIndex;
-
-                parent.NodeRight = RemoveInnerData(parent.NodeRight, parent.Data);
+                int l = getHeight(current.NodeLeft);
+                int r = getHeight(current.NodeRight);
+                int m = Math.Max(l, r);
+                height = m + 1;
             }
-
-            return parent;
+            return height;
         }
 
-        private Node<T>? RemoveInnerIndex(Node<T>? parent, int index)
+        private Node<T> RotateRR(Node<T> parent)
         {
-            if (parent == null) return parent;
-
-            if (index < parent.Index)
-                parent.NodeLeft = RemoveInnerIndex(parent.NodeLeft, index);
-            else if (index > parent.Index)
-                parent.NodeRight = RemoveInnerIndex(parent.NodeRight, index);
-
-            else
-            {
-                if (parent.NodeLeft == null)
-                    return parent.NodeRight;
-                else if (parent.NodeRight == null)
-                    return parent.NodeLeft;
-
-                int minValueStrength;
-                int minValueIndex;
-
-                MinValue(parent.NodeRight, out minValueStrength, out minValueIndex);
-
-                parent.Data.Strength = minValueStrength;
-                parent.Index = minValueIndex;
-
-                parent.NodeRight = RemoveInnerIndex(parent.NodeRight, parent.Index);
-            }
-
-            return parent;
+            Node<T> pivot = parent.NodeRight;
+            parent.NodeRight = pivot.NodeLeft;
+            pivot.NodeLeft = parent;
+            return pivot;
         }
-
-        private void MinValue(Node<T> node, out int minValueStrength, out int minValueIndex)
+        private Node<T> RotateLL(Node<T> parent)
         {
-
-            minValueStrength = node.Data.Strength;
-            minValueIndex = node.Index;
-
-            while (node.NodeLeft != null)
-            {
-                minValueStrength = node.NodeLeft.Data.Strength;
-                minValueIndex = node.NodeLeft.Index;
-                node = node.NodeLeft;
-            }
+            Node<T> pivot = parent.NodeLeft;
+            parent.NodeLeft = pivot.NodeRight;
+            pivot.NodeRight = parent;
+            return pivot;
+        }
+        private Node<T> RotateLR(Node<T> parent)
+        {
+            Node<T> pivot = parent.NodeLeft;
+            parent.NodeLeft = RotateRR(pivot);
+            return RotateLL(parent);
+        }
+        private Node<T> RotateRL(Node<T> parent)
+        {
+            Node<T> pivot = parent.NodeRight;
+            parent.NodeRight = RotateLL(pivot);
+            return RotateRR(parent);
         }
     }
 }

@@ -13,8 +13,6 @@ namespace BinaryTreePlayers
             Data = data;
         }
 
-        public int Weight { get; set; } = 1;
-
         public Node<T>? NodeLeft { get; set; } = null;
         public Node<T>? NodeRight { get; set; } = null;
     }

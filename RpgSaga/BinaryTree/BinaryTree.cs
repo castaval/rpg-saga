@@ -240,9 +240,41 @@
             return IndexList[index-1];
         }
 
-
-        public void Print(int spacing = 1, int topMargin = 2, int leftMargin = 2)
+        public void Print()
         {
+            PrintConsole();
+            PrintFile();
+        }
+
+        private async void PrintFile()
+        {
+            string path = "PlayersFile.txt";
+
+            using (StreamWriter writer = new StreamWriter(path, false))
+            {
+                string text;
+
+                foreach (var player in IndexList)
+                {
+                    if (player.Data == null)
+                    {
+                        text = "( )";
+                    }
+                    else
+                    {
+                        text = $"({player.Data.ClassName}) {player.Data.Name}";
+                    }
+
+                    await writer.WriteLineAsync(text);
+                }
+            }
+        }
+
+        private void PrintConsole()
+        {
+            int spacing = 1;
+            int topMargin = 2;
+            int leftMargin = 2;
             if (Root == null) return;
             int rootTop = Console.CursorTop + topMargin;
             var last = new List<NodeInfo<T>>();

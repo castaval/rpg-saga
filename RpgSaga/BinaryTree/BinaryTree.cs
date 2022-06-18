@@ -128,9 +128,15 @@
             return current;
         }
 
-        public void Delete(T target)
+        public void DeleteData(T target)
         {
             Root = Delete(Root, target);
+            AcrossIndex();
+        }
+
+        public void DeleteIndex(int index)
+        {
+            Root = Delete(Root, IndexList[index-1].Data);
             AcrossIndex();
         }
 
@@ -153,7 +159,11 @@
                     queue.Enqueue(queue.Peek().NodeRight);
                 }
 
-                IndexList.Add(queue.Dequeue());
+                Node<T> newIndex = queue.Dequeue();
+
+                ref Node<T> index = ref newIndex;
+
+                IndexList.Add(index);
             }
 
         } 
@@ -224,41 +234,12 @@
             }
             return current;
         }
-        public void Find(T key)
+
+        public Node<T> Get(int index)
         {
-            if (Find(key, Root).Data.Strength == key.Strength)
-            {
-                Console.WriteLine("{0} was found!", key);
-            }
-            else
-            {
-                Console.WriteLine("Nothing found!");
-            }
+            return IndexList[index-1];
         }
 
-        private Node<T> Find(T target, Node<T> current)
-        {
-
-            if (target.Strength < current.Data.Strength)
-            {
-                if (target.Strength == current.Data.Strength)
-                {
-                    return current;
-                }
-                else
-                return Find(target, current.NodeLeft);
-            }
-            else
-            {
-                if (target.Strength == current.Data.Strength)
-                {
-                    return current;
-                }
-                else
-                return Find(target, current.NodeRight);
-            }
-
-        }
 
         public void Print(int spacing = 1, int topMargin = 2, int leftMargin = 2)
         {

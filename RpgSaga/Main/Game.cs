@@ -13,6 +13,7 @@ namespace Base
         private ILogger Logger { get; set; }
         private int numberTour { get; set; }
         private List<Names>? playerNames { get; set; }
+        private BinaryTree<IPlayer> tree { get; set; }
         public Game(ILogger GameLogger)
         {
             Logger = GameLogger;
@@ -36,6 +37,8 @@ namespace Base
 
             List<IPlayer> players = new List<IPlayer>(playersGenerator.GeneratePlayersArray());
 
+            tree = new BinaryTree<IPlayer>(null, (int)Math.Log2(players.Count), true);
+
             while (true)
             {
                 Logger.PrintTour(numberTour);
@@ -48,9 +51,12 @@ namespace Base
                 {
                     break;
                 }
+
+
             }
 
-            BTree();
+            Console.Clear();
+            tree.Print();
         }
 
         public void Draft(List <IPlayer> players)
@@ -71,7 +77,7 @@ namespace Base
             {
                 if (i + 1 < players.Count)
                 {
-                    Fight fight = new Fight(players[i], players[i+1], ref players, Logger);
+                    Fight fight = new Fight(players[i], players[i+1], ref players, tree, Logger);
                     fight.Battle();
                 }
             }
@@ -82,6 +88,8 @@ namespace Base
             if (players.Count == 1)
             {
                 Logger.PrintEnd(players[0]);
+                var player = GameWinnerData();
+                player.Data = players[0];
                 return true;
             }
             else
@@ -90,25 +98,10 @@ namespace Base
             }
         }
 
-        public void BTree()
+        private Node<IPlayer> GameWinnerData()
         {
-            BinaryTree<IPlayer> tree = new BinaryTree<IPlayer>(null, 4, true);
-            // BinaryTree<IPlayer> tree = new BinaryTree<IPlayer>(null);
-            var archerDelete = new Archer("Max4", 34, 14, "Лучник");
-            // tree.Insert(new Archer("Max1", 31, 11, "Лучник"));
-            // tree.Insert(new Archer("Max2", 32, 12, "Лучник"));
-            // tree.Insert(archerDelete);
-            // tree.Insert(new Archer("Max3", 29, 13, "Лучник"));
-            // tree.Insert(null);
-            Console.Clear();
-            tree.Print();
-            // tree.RemoveIndex(3);
-            // Console.Clear();
-            // tree.Print();
-
-
+            var index = 1;
+            return tree.Get(index);
         }
-
-
     }
 }

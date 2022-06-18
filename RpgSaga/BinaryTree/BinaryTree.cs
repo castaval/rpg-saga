@@ -251,7 +251,7 @@
 
             for (int level = 0; next != null; level++)
             {
-                if (Empty)
+                if (next.Data == null)
                 {
                     text = "( )";
                 }

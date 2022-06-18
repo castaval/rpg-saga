@@ -3,19 +3,22 @@ namespace Fight
     using Players;
     using Logger;
     using Effects;
+    using BinaryTreePlayers;
     public class Fight
     {
         private ILogger Logger { get; set; }
         private IPlayer FirstPlayer { get; set; }
         private IPlayer SecondPlayer { get; set; }
         private int round { get; set; } = 1;
+        private BinaryTree<IPlayer> Tree { get; set; }
         List <IPlayer> AllPlayers { get; set; }
 
-        public Fight(IPlayer firstPlayer, IPlayer secondPlayer, ref List<IPlayer> allPlayers, ILogger logger)
+        public Fight(IPlayer firstPlayer, IPlayer secondPlayer, ref List<IPlayer> allPlayers, BinaryTree<IPlayer> tree, ILogger logger)
         {
             FirstPlayer = firstPlayer;
             SecondPlayer = secondPlayer;
             AllPlayers = allPlayers;
+            Tree = tree;
             Logger = logger;
         }
 
@@ -107,6 +110,12 @@ namespace Fight
             if (loser.Health <= 0)
             {
                 Logger.PrintDefeat(loser);
+
+                if (!(AllPlayers.Count() == 2))
+                {
+                    var player = Tree.Get(AllPlayers.Count() - 1);
+                    player.Data = loser;
+                }
 
                 AllPlayers.Remove(loser);
                 winner.RestoreAfterBattle();
